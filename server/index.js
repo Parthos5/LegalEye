@@ -16,9 +16,9 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.use("/", require("./Routes/userfunction"));
-app.use("/", require("./Routes/tasks"));
-app.use("/",require("./Routes/spotify"));
+// app.use("/", require("./Routes/userfunction"));
+// app.use("/", require("./Routes/tasks"));
+// app.use("/",require("./Routes/spotify"));
 
 
 app.listen(process.env.PORT || port, () => {
