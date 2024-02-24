@@ -2,6 +2,7 @@ import React from 'react'
 import './Home.css'
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBalanceScale } from '@fortawesome/free-solid-svg-icons';
 import { faGavel, faBrain, faBookReader } from '@fortawesome/free-solid-svg-icons';
 import introImage from '../../assets/img.jpg';
 import LogoImage from '../../assets/LOGO.png';
@@ -37,11 +38,11 @@ export default function Home() {
           <a href="#why" className="navbar-item" onClick={scrollToSection('why')}>Why Us?</a>
           <a href="#solutions" className="navbar-item" onClick={scrollToSection('solutions')}>Solutions</a>
           <a href="#resources" className="navbar-item" onClick={scrollToSection('resources')}>Resources</a>
-          <a href="#pricing" className="navbar-item" onClick={scrollToSection('pricing')}>Pricing</a>
+          <a href="#start" className="navbar-item" onClick={scrollToSection('pricing')}>Pricing</a>
         </div>
         <div className="navbar-end">
           <a href="#sign-in" className="navbar-item">Sign In</a>
-          <button className="btn-started" onClick={handleGetStartedClick}>Get Started</button>
+          <button className="btn-started" onClick={scrollToSection('start')}>Get Started</button>
         </div>
       </nav>
       <div className="intro-container">
@@ -111,8 +112,39 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="resources">Resources Content</section>
-      <section id="pricing">Pricing Content</section>
+      <section id="resources" className="resources-section">
+        <h2 className="resources-title">Comprehensive Legal Resources</h2>
+        <p className="resource-description">
+          Our platform offers an extensive collection of legal resources tailored to enhance the learning and research experience for law students and professionals. Below are some of the key resources we provide:
+        </p>
+        <ul className="resource-list">
+          <li>
+            <strong>Case Summaries:</strong> Concise summaries of court proceedings, capturing the essence of each case to facilitate quick understanding and review.
+          </li>
+          <li>
+            <strong>Judge and Lawyer Profiles:</strong> Detailed information on the judges presiding over cases and the lawyers representing parties, offering insights into their legal backgrounds and expertise.
+          </li>
+          <li>
+            <strong>Official Documents:</strong> Access to official legal documents used in the proceedings, including motions, briefs, and judgments, to provide a comprehensive view of each case.
+          </li>
+        </ul>
+      </section>
+
+      <section id="start" className="start-section">
+        <div className="start-container">
+          <div className="option" onClick={() => navigate('/govt-login')}>
+            <h3>Government Officials</h3>
+            <p>Login here for access to official proceedings and documents.</p>
+          </div>
+
+          <FontAwesomeIcon icon={faBalanceScale} className="scales-icon" />
+
+          <div className="option" onClick={() => navigate('/student-sign-in')}>
+            <h3>Students</h3>
+            <p>Sign in here for educational resources and case studies.</p>
+          </div>
+        </div>
+      </section>
       
       {/* ... other sections ... */}
     </div>

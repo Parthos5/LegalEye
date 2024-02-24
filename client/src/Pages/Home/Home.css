@@ -69,7 +69,7 @@
   .intro-container {
     display: flex;
     align-items: center;
-    background-color: #0a0202; /* Change this to match your design */
+    background-color: #271c14; /* Change this to match your design */
     padding: 20px;
     margin-top: 10px;
   }
@@ -134,7 +134,7 @@
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: #0a0202;;
+    color: #271c14;;
   }
   
   .features {
@@ -149,7 +149,7 @@
     max-width: 350px;
     margin: 1rem;
     padding: 2rem;
-    background: #0a0202;
+    background: #271c14;
     text-align: center;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -178,7 +178,7 @@
   }
   
   .solutions-section {
-    background-color: #0a0202;
+    background-color: #271c14;
     padding: 50px;
     color: #333;
   }
@@ -226,4 +226,92 @@
     font-size: 14px;
   }
   
- 
+  .resources-section {
+    padding: 2rem;
+    background-color: white; /* Light background to keep focus on text */
+  }
+  
+  .resources-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .resource-description, .resource-list {
+    max-width: 800px; /* Medium width for easier reading */
+    margin: auto; /* Centers the text block */
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  .resource-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #666; /* Medium contrast for readability */
+  }
+  
+  .resource-list {
+    list-style-type: none; /* Removes bullet points for a cleaner look */
+    padding: 0;
+  }
+  
+  .resource-list li {
+    margin-bottom: 0.5rem; /* Spacing between list items */
+    font-size: 1rem;
+    color: #444; /* Slightly darker than the description for emphasis */
+  }
+  
+  .resource-list strong {
+    color: #333; /* Bold and slightly darker for key terms */
+  }
+  .scales-icon {
+    color: #DAA520; /* Gold color */
+    margin: 0 20px;
+    font-size: 3rem; /* Adjust size as needed */
+  }
+
+  .start-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    background-color: #271c14; /* Light background to keep the focus on content */
+  }
+  
+  .start-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px; /* Adjust based on your design preference */
+  }
+  
+  .option {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .scales-icon {
+    width: 140px; /* Adjust based on your image size */
+    height: auto;
+  }
+  
+  .option h3 {
+    color: white;
+    margin-bottom: 10px;
+  }
+  
+  .option p {
+    color: wheat;
+    font-size: 1rem;
+  }
+  
