@@ -132,14 +132,14 @@ export default function Home() {
 
       <section id="start" className="start-section">
         <div className="start-container">
-          <div className="option" onClick={() => navigate('/govt-login')}>
+          <div className="option" onClick={() => navigate('/login')}>
             <h3>Government Officials</h3>
             <p>Login here for access to official proceedings and documents.</p>
           </div>
 
           <FontAwesomeIcon icon={faBalanceScale} className="scales-icon" />
 
-          <div className="option" onClick={() => navigate('/student-sign-in')}>
+          <div className="option" onClick={() => navigate('/signin')}>
             <h3>Students</h3>
             <p>Sign in here for educational resources and case studies.</p>
           </div>
