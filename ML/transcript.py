@@ -8,8 +8,6 @@ def normalize_audio(audio):
 # Path to the audio file
 audio_file = "LibriSpeech/dev-other/1650/157641/1650-157641-0015.flac"
 dataset_folder = "LibriSpeech"
-# C:\Users\thosp\OneDrive\Documents\GitHub\mprsem6\ML\LibriSpeech\dev-other\116\288045\116-288045-0000.flac
-# normalized_audio, sr = librosa.load("LibriSpeech/dev-other/1650/157641/1650-157641-0015_normalized.joblib", sr=None)
 normalized_audio = joblib.load("LibriSpeech/dev-other/1650/157641/1650-157641-0005_normalized.joblib")
 sr = 22050  # Assuming a default sampling rate of 22050 Hz, change as needed
 
@@ -28,6 +26,9 @@ plt.show()
 import IPython.display as ipd
 ipd.Audio(audio_file)
 
+def extract_mfcc(audio_data, sr):
+    mfcc_features = librosa.feature.mfcc(y=audio_data, sr=sr, n_mfcc=13)
+    return mfcc_features
 # making the aplitude of all the audio files in range -0.5,0.5
 # Iterate over all subdirectories in the dataset folder
 # for root, dirs, files in os.walk(dataset_folder):
@@ -45,3 +46,21 @@ ipd.Audio(audio_file)
 #             joblib.dump(normalized_audio, output_file)
 
 #             print("Normalized audio saved to:", output_file)
+
+# Feature Extraction using MFCC
+def extract_mfcc_from_folder(folder_path, output_folder):
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            if file.endswith(".joblib"):  # Adjust file extension if needed
+                audio_file = os.path.join(root, file)
+                audio_data = joblib.load(audio_file)
+                mfcc_features = extract_mfcc(audio_data,sr)
+                output_file = os.path.join(output_folder, file.replace(".joblib", "_mfcc.joblib"))
+                joblib.dump(mfcc_features, output_file)
+                
+                print("MFCC features saved to:", output_file)
+
+# Example usage
+# input_folder = "path/to/your/input/audio/folder"
+output_folder = "Features"
+extract_mfcc_from_folder(dataset_folder, output_folder)
