@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import './Signin.css'; // Ensure this path matches your CSS file's location
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const navigate = useNavigate(); // Create navigate function
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    navigate('/SFirst'); // Navigate to SFirst page
+  };
 
   return (
-    <div className={`container ${isSignUp ? "sign-up-mode" : ""}`}>
+    <div className={`signin-container ${isSignUp ? "sign-up-mode" : ""}`}>
       <div className="forms-container">
         <div className="signin-signup">
-          <form action="#" className="sign-in-form">
+          <form action="#" className="sign-in-form" onSubmit={handleSubmit}> {/* Add handleSubmit to the onSubmit event */}
             <h2 className="title">Sign in</h2>
             <div className="input-field">
               <i className="fas fa-user"></i>

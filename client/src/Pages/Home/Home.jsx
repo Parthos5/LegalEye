@@ -139,7 +139,7 @@ export default function Home() {
 
           <FontAwesomeIcon icon={faBalanceScale} className="scales-icon" />
 
-          <div className="option" onClick={() => navigate('/signin')}>
+          <div className="option" onClick={() => navigate('/Signin')}>
             <h3>Students</h3>
             <p>Sign in here for educational resources and case studies.</p>
           </div>
