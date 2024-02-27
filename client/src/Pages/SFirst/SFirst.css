@@ -81,4 +81,81 @@
       flex-direction: column;
     }
   }
+  /* Base card styling */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .card-content {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .card-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  
+  /* Specific styling for description */
+  .card-description p {
+    margin-bottom: 10px;
+  }
+  
+  .card-description ul {
+    padding-left: 20px;
+  }
+  
+  .card-description li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+  }
+  
+  /* Ensuring readability and aesthetics */
+  .class-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+  }
+  
+  .class-card {
+    margin-right: 20px;
+    width: 200px; /* Set a fixed width for the cards */
+    /* Add more styling here to match the design in the image */
+  }
+  
+  .class-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    /* Add more styling here */
+  }
+  
+  /* Add additional styles for the body of the class card, images, etc. */
+  
   

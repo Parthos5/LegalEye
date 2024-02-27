@@ -7,13 +7,48 @@ import LogoImage from '../../assets/LOGO.png';
 export default function SFirst() {
   // Sample data for cases
   const cases = [
-    { id: 1, title: "Case 1", description: "Description for Case 1", imageUrl: "path/to/image1.jpg" },
-    { id: 2, title: "Case 2", description: "Description for Case 2", imageUrl: "path/to/image2.jpg" },
-    { id: 2, title: "Case 3", description: "Description for Case 3", imageUrl: "path/to/image3.jpg" },
-    { id: 2, title: "Case 4", description: "Description for Case 4", imageUrl: "path/to/image4.jpg" },
-    { id: 2, title: "Case 5", description: "Description for Case 5", imageUrl: "path/to/image5.jpg" },
-    { id: 2, title: "Case 6", description: "Description for Case 6", imageUrl: "path/to/image6.jpg" },
+      {
+        id: 1,
+        title: "Criminal Law",
+        description: "Homicide Cases: Involving unlawful death, including murder and manslaughter. Theft and Burglary: Involving property theft, break-ins, and robbery. Drug-Related Crimes: Including possession, distribution, and manufacturing of illegal substances. Assault and Battery: Involving physical harm or threats to a person. DUI/DWI Cases: Relating to driving under the influence of alcohol or drugs.",
+        imageUrl: "path/to/criminal-law.jpg"
+      },
+      {
+        id: 2,
+        title: "Civil Law",
+        description: "Contract Disputes: Involving disagreements over the terms and enforcement of contracts. Torts: Including personal injury cases, negligence, and defamation. Property Disputes: Covering issues like boundary disputes, zoning, and property damage. Family Law: Encompassing divorce, child custody, and adoption. Estate Planning and Probate: Involving wills, trusts, and estate management.",
+        imageUrl: "path/to/civil-law.jpg"
+      },
+      {
+        id: 3,
+        title: "Commercial and Corporate Law",
+        description: "Intellectual Property: Covering patents, copyrights, trademarks, and trade secrets. Employment Law: Involving wrongful termination, discrimination, and workplace safety. Bankruptcy: Covering both individual and corporate bankruptcy proceedings. Securities Law: Involving stock market fraud, insider trading, and compliance with financial regulations.",
+        imageUrl: "path/to/commercial-law.jpg"
+      },
+      {
+        id: 4,
+        title: "Administrative Law",
+        description: "Immigration Law: Covering visas, asylum, deportation, and citizenship issues. Social Security and Disability Claims: Involving disputes over benefits and entitlements. Licensing Issues: Related to professional licensure and regulatory compliance.",
+        imageUrl: "path/to/administrative-law.jpg"
+      },
+      {
+        id: 5,
+        title: "International Law",
+        description: "Human Rights Cases: Involving allegations of human rights violations. Trade Disputes: Covering international trade agreements and disputes. Environmental Law: Addressing international environmental protection efforts.",
+        imageUrl: "path/to/international-law.jpg"
+      },
+      {
+        id: 6,
+        title: "Public Law",
+        description: "Constitutional Law: Involving issues related to the interpretation and application of the constitution. Tax Law: Covering disputes over tax obligations with government entities.",
+        imageUrl: "path/to/public-law.jpg"
+      }
   ];
+      
+  const classes = [
+    // ... Add your class data here similar to the cases array
+  ];
+
 
   return (
     <div>
@@ -41,6 +76,23 @@ export default function SFirst() {
             <img src={caseItem.imageUrl} alt={caseItem.title} />
             <h3>{caseItem.title}</h3>
             <p>{caseItem.description}</p>
+          </div>
+        ))}
+      </div>
+      <h2>Most engaging IIT JEE classes of all time</h2>
+      <div className="class-container">
+        {classes.map(classItem => (
+          <div className="class-card" key={classItem.id}>
+            <div className="class-card-header">
+              <FontAwesomeIcon icon={faPlayCircle} />
+              <span>{classItem.views}</span>
+            </div>
+            <img src={classItem.instructorImage} alt={classItem.instructorName} />
+            <div className="class-card-body">
+              <span className="subject">{classItem.subject}</span>
+              <h3>{classItem.title}</h3>
+              <p>{classItem.instructorName}</p>
+            </div>
           </div>
         ))}
       </div>
