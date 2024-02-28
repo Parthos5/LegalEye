@@ -10,8 +10,8 @@ const bcrypt = require("bcrypt")
 
 router.post("/login", async (req, res) => {
     try {
-        const { email, password } = req.body
-        const govtUser = await Govt.findOne({ email })
+        const { username, password } = req.body
+        const govtUser = await Govt.findOne({ username })
 
         console.log(govtUser)
 
@@ -25,14 +25,12 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({ error: "Authentication failed." })
         }
 
-        const token = jwt.sign({ govtId: govtUser._id, email: govtUser._id }, secretKey, {
-            expiresIn: '4h',
-        })
+        const token = jwt.sign({ govtId: govtUser._id, username: govtUser.username }, secretKey)
 
         // Set the JWT token in the response header
         res.setHeader('Authorization', `Bearer ${token}`);
 
-        res.status(200).json({ token, govtId: govtUser._id })
+        res.status(200).json({ token, govtId: govtUser._id, success: true })
 
     } catch (error) {
         console.error(error);

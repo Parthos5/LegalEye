@@ -22,6 +22,9 @@ var CaseSchema = new Schema({
     ownerId: {
         type: String,
     },
+    title: {
+        type: String,
+    },
     categoryCode: {
         type: Number,
     },
@@ -29,6 +32,9 @@ var CaseSchema = new Schema({
         type: String,
     },
     subCategory: {
+        type: String,
+    },
+    description: {
         type: String,
     },
     updates:[updateSchema],
