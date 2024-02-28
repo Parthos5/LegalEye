@@ -1,10 +1,11 @@
 import React from 'react';
 import './SFirst.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faPlayCircle } from '@fortawesome/free-solid-svg-icons'; // Make sure you have faPlayCircle imported
 import LogoImage from '../../assets/LOGO.png';
 
 export default function SFirst() {
+
   // Sample data for cases
   const cases = [
       {
@@ -46,7 +47,22 @@ export default function SFirst() {
   ];
       
   const classes = [
-    // ... Add your class data here similar to the cases array
+    {
+      id: 1,
+      lawyerName: "Mohammad Kashif Alam",
+      law: "Criminal Law",
+      title: "Bank robbery",
+      views: "1.1K",
+      language: "English"
+    },
+    {
+      id: 2,
+      lawyerName: "Arvind Kalia",
+      law: "Civil Law",
+      title: "Amber Heard vs Johnny depp",
+      views: "1.3K",
+      language: "English"
+    },
   ];
 
 
@@ -79,19 +95,17 @@ export default function SFirst() {
           </div>
         ))}
       </div>
-      <h2>Most engaging IIT JEE classes of all time</h2>
+      <h2>Most engaging Cases of 2023</h2>
       <div className="class-container">
         {classes.map(classItem => (
           <div className="class-card" key={classItem.id}>
             <div className="class-card-header">
-              <FontAwesomeIcon icon={faPlayCircle} />
               <span>{classItem.views}</span>
             </div>
-            <img src={classItem.instructorImage} alt={classItem.instructorName} />
             <div className="class-card-body">
-              <span className="subject">{classItem.subject}</span>
+              <span className="law">{classItem.law}</span>
               <h3>{classItem.title}</h3>
-              <p>{classItem.instructorName}</p>
+              <p>{classItem.lawyerName}</p>
             </div>
           </div>
         ))}
