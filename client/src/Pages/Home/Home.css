@@ -1,0 +1,316 @@
+.App {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    color:  rgb(35, 1, 1);
+    padding: 10px 20px;
+  }
+
+  .navbar-brand img {
+    margin-right: 10px;
+    height: 50px; /* Adjust height accordingly */
+  }
+  
+  /* Increase the specific font size for the LegalEye text if needed */
+ 
+
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    font-size: 1.7em;
+    font-weight: bold;
+  }
+  
+  .navbar-menu {
+    display: flex;
+  }
+  
+  .navbar-item {
+    padding: 0 10px;
+    color: rgb(35, 1, 1);
+    text-decoration: none;
+  }
+  
+  .navbar-item:hover {
+    text-decoration: underline;
+  }
+  
+  .navbar-end {
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn-started {
+    background-color: #eff0ec;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  
+  .btn-started:hover {
+    background-color: red;
+  }
+  
+  /* Add any additional styling you want here */
+  section {
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Existing styles... */
+  .intro-container {
+    display: flex;
+    align-items: center;
+    background-color: #271c14; /* Change this to match your design */
+    padding: 20px;
+    margin-top: 10px;
+  }
+  
+  .intro-image {
+    width: 50%; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 20px;
+  }
+  
+  .intro-text {
+    flex: 1.50; /* Take up remaining space */
+  }
+  
+  .intro-text h1 {
+    font-size: 3em; /* Adjust size as needed */
+    color: white; /* Adjust color as needed */
+    margin-bottom: 0.5em;
+  }
+  
+  .intro-text p {
+    font-size: 2em;
+    color: #666; /* Adjust color as needed */
+    margin-bottom: 1em;
+  }
+  
+  input[type="email"] {
+    padding: 10px;
+    margin-bottom: 1em;
+    border: 1px solid #ddd; /* Adjust color as needed */
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #0065a4; /* Adjust button color as needed */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button:hover {
+    background-color: #005a94; /* Adjust for hover state as needed */
+  }
+  
+  /* Add any additional styling you want here */
+  /* Home.css */
+
+.why-us-section {
+    background: white;
+    padding: 4rem 0;
+  }
+  
+  .container {
+    margin-top: 10px;
+    padding: 0 15px;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #271c14;;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .feature {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+    margin: 1rem;
+    padding: 2rem;
+    background: #271c14;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature-icon {
+    font-size: 4rem;
+    color: white;
+    margin-bottom: 1rem;
+    border: 2px solid gold; /* Example border: 2px solid with gold color */
+    border-radius: 50%; /* Makes the border rounded; adjust as needed */
+    padding: 0.5rem; /* Add some padding to create space around the icon */
+    display: inline-block; /* Allows the border and padding to wrap around the icon correctly */
+  }  
+  
+  .feature-title {
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+  
+  .feature-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+  }
+  
+  .solutions-section {
+    background-color: #271c14;
+    padding: 50px;
+    color: #333;
+  }
+  
+  .solutions-title {
+    text-align: center;
+    color: whitesmoke; /* A shade of brown */
+    font-size: 2.7rem;
+    margin-bottom: 30px;
+  }
+  
+  .solutions-wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .solution-card {
+    width: 300px;
+    margin: 10px;
+    background-color: #FAF4F0; /* Light brown/white background */
+    border: 1px solid #D4B897; /* Gold shade for border */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .card-content {
+    padding: 20px;
+  }
+  
+  .card-content h3 {
+    color: #6B4F4F; /* A shade of brown */
+    margin-bottom: 15px;
+  }
+  
+  .card-content p {
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .resources-section {
+    padding: 2rem;
+    background-color: white; /* Light background to keep focus on text */
+  }
+  
+  .resources-title {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .resource-description, .resource-list {
+    max-width: 800px; /* Medium width for easier reading */
+    margin: auto; /* Centers the text block */
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  .resource-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #666; /* Medium contrast for readability */
+  }
+  
+  .resource-list {
+    list-style-type: none; /* Removes bullet points for a cleaner look */
+    padding: 0;
+  }
+  
+  .resource-list li {
+    margin-bottom: 0.5rem; /* Spacing between list items */
+    font-size: 1rem;
+    color: #444; /* Slightly darker than the description for emphasis */
+  }
+  
+  .resource-list strong {
+    color: #333; /* Bold and slightly darker for key terms */
+  }
+  .scales-icon {
+    color: #DAA520; /* Gold color */
+    margin: 0 20px;
+    font-size: 3rem; /* Adjust size as needed */
+  }
+
+  .start-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    background-color: #271c14; /* Light background to keep the focus on content */
+  }
+  
+  .start-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 1200px; /* Adjust based on your design preference */
+  }
+  
+  .option {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .option:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .scales-icon {
+    width: 140px; /* Adjust based on your image size */
+    height: auto;
+  }
+  
+  .option h3 {
+    color: white;
+    margin-bottom: 10px;
+  }
+  
+  .option p {
+    color: wheat;
+    font-size: 1rem;
+  }
+  
