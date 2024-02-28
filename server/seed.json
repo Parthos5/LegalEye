@@ -1,0 +1,17 @@
+{
+    "email": "dummyEmail",
+    "username": "dummyuname",
+    "password": "dummypword",
+    "casesList": [
+        {
+            "categoryCode": 1201,
+            "category": "rent issue",
+            "subCategory": "not paid",
+            "transcription": [
+                {
+                    "text": "this is dummy text"
+                }
+            ]
+        }
+    ]
+}

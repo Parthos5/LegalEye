@@ -20,6 +20,8 @@ app.get("/", (req, res) => {
 // app.use("/", require("./Routes/tasks"));
 // app.use("/",require("./Routes/spotify"));
 
+app.use("/govt", require("./Routes/govt"))
+
 
 app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port ${port}`);
