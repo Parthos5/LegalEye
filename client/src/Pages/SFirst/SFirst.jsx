@@ -3,6 +3,11 @@ import './SFirst.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faPlayCircle } from '@fortawesome/free-solid-svg-icons'; // Make sure you have faPlayCircle imported
 import LogoImage from '../../assets/LOGO.png';
+import CriminalLaw from '../../assets/criminal_law.jpeg';
+import CivilLaw from '../../assets/civil_law.jpeg';
+import publicLaw from '../../assets/public_law.jpeg';
+import internationalLaw from '../../assets/international_law.jpeg';
+import comm from '../../assets/commercial-law.jpg';
 
 export default function SFirst() {
 
@@ -12,37 +17,37 @@ export default function SFirst() {
         id: 1,
         title: "Criminal Law",
         description: "Homicide Cases: Involving unlawful death, including murder and manslaughter. Theft and Burglary: Involving property theft, break-ins, and robbery. Drug-Related Crimes: Including possession, distribution, and manufacturing of illegal substances. Assault and Battery: Involving physical harm or threats to a person. DUI/DWI Cases: Relating to driving under the influence of alcohol or drugs.",
-        imageUrl: "path/to/criminal-law.jpg"
+        imageUrl: CriminalLaw
       },
       {
         id: 2,
         title: "Civil Law",
         description: "Contract Disputes: Involving disagreements over the terms and enforcement of contracts. Torts: Including personal injury cases, negligence, and defamation. Property Disputes: Covering issues like boundary disputes, zoning, and property damage. Family Law: Encompassing divorce, child custody, and adoption. Estate Planning and Probate: Involving wills, trusts, and estate management.",
-        imageUrl: "path/to/civil-law.jpg"
+        imageUrl: CivilLaw
       },
       {
         id: 3,
         title: "Commercial and Corporate Law",
         description: "Intellectual Property: Covering patents, copyrights, trademarks, and trade secrets. Employment Law: Involving wrongful termination, discrimination, and workplace safety. Bankruptcy: Covering both individual and corporate bankruptcy proceedings. Securities Law: Involving stock market fraud, insider trading, and compliance with financial regulations.",
-        imageUrl: "path/to/commercial-law.jpg"
+        imageUrl: comm
       },
       {
         id: 4,
         title: "Administrative Law",
         description: "Immigration Law: Covering visas, asylum, deportation, and citizenship issues. Social Security and Disability Claims: Involving disputes over benefits and entitlements. Licensing Issues: Related to professional licensure and regulatory compliance.",
-        imageUrl: "path/to/administrative-law.jpg"
+        imageUrl: CivilLaw
       },
       {
         id: 5,
         title: "International Law",
         description: "Human Rights Cases: Involving allegations of human rights violations. Trade Disputes: Covering international trade agreements and disputes. Environmental Law: Addressing international environmental protection efforts.",
-        imageUrl: "path/to/international-law.jpg"
+        imageUrl: internationalLaw
       },
       {
         id: 6,
         title: "Public Law",
         description: "Constitutional Law: Involving issues related to the interpretation and application of the constitution. Tax Law: Covering disputes over tax obligations with government entities.",
-        imageUrl: "path/to/public-law.jpg"
+        imageUrl: publicLaw
       }
   ];
       

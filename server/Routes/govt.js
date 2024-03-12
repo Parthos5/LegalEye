@@ -5,7 +5,7 @@ const Govt = require("../models/Govt")
 const Case = require("../models/Case")
 
 const jwt = require('jsonwebtoken')
-const secretKey = "hi-bro-pls-keep-this-a-secret"
+const secretKey = process.env.SECRET
 const bcrypt = require("bcrypt")
 
 router.post("/login", async (req, res) => {
