@@ -1,0 +1,97 @@
+.add-case-form-container {
+    font-family: 'Arial', sans-serif;
+    background-color: #271c14; /* Dark brown background for the container */
+    color: #f0f0f0; /* Light text for contrast */
+    padding-top: 20px;
+    margin: 0 auto;
+  }
+  
+  .add-case-form-container h2 {
+    color: #d4af37; /* Gold color for headings */
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .add-case-form-container form {
+    background-color: #3d2c22; /* Slightly lighter brown for the form */
+    display: block;
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid #d4af37; /* Gold border for the form */
+  }
+
+  
+  .add-case-form-container .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .add-case-form-container label {
+    color: #fff; /* White color for labels */
+  }
+  
+  .add-case-form-container .form-group textarea#caseDescription {
+    width: calc(100% - 20px); /* Subtracting the total padding from the width */
+    height: auto; /* Height based on content */
+    min-height: 100px; /* Minimum height */
+    resize: vertical; /* Allow vertical resizing only */
+  }
+  
+
+  .add-case-form-container input[type="text"],
+  .add-case-form-container input[type="date"],
+  .add-case-form-container select,
+  .add-case-form-container textarea {
+    background-color: #44382f; /* Even lighter brown for input backgrounds */
+    border: 1px solid #d4af37; /* Gold border for inputs */
+    color: #fff; /* White text for inputs */
+  }
+  
+  .add-case-form-container input::placeholder {
+    color: #ccc; /* Lighter color for placeholders, for better contrast */
+  }
+  
+  .add-case-form-container button[type="submit"] {
+    background-color: #d4af37; /* Gold background for the submit button */
+    color: #271c14; /* Dark brown text for the button */
+    font-weight: bold;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .add-case-form-container button[type="submit"]:hover {
+    background-color: #c9a028; /* Darker shade of gold for the hover effect */
+  }
+  
+  .add-case-form-container .row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .add-case-form-container .form-group {
+    flex: 1;
+    margin-right: 10px; /* Spacing between the form groups */
+  }
+  
+  .add-case-form-container .form-group:last-child {
+    margin-right: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .add-case-form-container .row {
+      flex-direction: column;
+    }
+    .add-case-form-container .form-group {
+      margin-right: 0;
+      margin-bottom: 20px; /* Add space between stacked elements on small screens */
+    }
+  }
+  
+  .add-case-form-container .form-actions {
+    text-align: right; /* Aligns the submit button to the right */
+  }
+  

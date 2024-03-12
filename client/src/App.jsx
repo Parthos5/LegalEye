@@ -6,6 +6,8 @@ import Govtlogin from './Pages/Govtlogin/Login.jsx';
 import Signin from './Pages/SignIn/Signin.jsx';
 import GFirst from './Pages/GFirst/GFirst.jsx';
 import SFirst from './Pages/SFirst/SFirst.jsx';
+import AddCase from './Pages/AddCase/AddCase.jsx';
+import UpdateCase from './Pages/UpdateCase/UpdateCase.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +20,8 @@ function App() {
       <Route path="/Signin" element={<Signin />} />  
       <Route path="/GFirst" element={<GFirst />} />
       <Route path="/SFirst" element={<SFirst />} />
+      <Route path="/AddCase" element={<AddCase />} />
+      <Route path="/UpdateCase" element={<UpdateCase />} />
     </Routes>
   </BrowserRouter>
   )
