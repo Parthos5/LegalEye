@@ -3,22 +3,14 @@ const mongoose = require("mongoose");
 //   process.env.MONGODB_URI;
 
 const MongoDB = async () => {
-  await mongoose
-    .connect(mongoUri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    })
-    .then(() => {
-      console.log("Connected to DB successfully!");
-      const fetched_data = mongoose.connection.db.collection("User"); //this command stores the data of a particular collection
-      fetched_data
-        .find({})
-        .toArray()
-        .then(function (err, data) {
-          err ? console.log("Success in fetching data") : console.log("Error in fetching data");
-        });
-    })
-    .catch((err) => console.log("Error:" + err));
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI)
+
+    console.log(`MongoDB connected successfully...`)
+  } catch (error) {
+    console.log(`Error: ${error.message}`)
+    process.exit()
+  }
 };
 
 module.exports = MongoDB;

@@ -6,7 +6,7 @@ const cors = require("cors");
 const port = 5000;
 const mongoDB = require("./db");
 mongoDB();
-const JWT_SECRET = "MYNAMEISPARTHANDAMAWESOMEHEREIAM"
+// const JWT_SECRET = "MYNAMEISPARTHANDAMAWESOMEHEREIAM"
 
 
 app.use(cors());
@@ -17,7 +17,11 @@ app.get("/", (req, res) => {
 });
 
 // app.use("/", require("./Routes/userfunction"));
+// app.use("/", require("./Routes/tasks"));
+// app.use("/",require("./Routes/spotify"));
 
+app.use("/govt", require("./Routes/govt"))
+app.use("/student", require("./Routes/student"))
 
 app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port ${port}`);

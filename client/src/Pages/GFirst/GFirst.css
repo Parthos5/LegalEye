@@ -1,0 +1,161 @@
+/* Navbar and Search/Filter Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .navbar input,
+  .navbar select {
+    padding: 10px;
+    margin: 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .navbar input:focus,
+  .navbar select:focus {
+    border-color: #007bff;
+  }
+  
+  /* Case Cards Container */
+  .case-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  }
+  
+  /* Individual Case Cards */
+  .case-card {
+    width: calc(33.333% - 40px);
+    margin: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .case-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .case-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .case-card h3 {
+    margin: 10px;
+  }
+  
+  .case-card p {
+    margin: 0 10px 20px 10px;
+    text-align: justify;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .case-card {
+      width: calc(50% - 40px);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .case-card {
+      width: calc(100% - 40px);
+    }
+  
+    .navbar input,
+    .navbar select {
+      flex: 1;
+      margin: 10px 0;
+    }
+  
+    .navbar {
+      flex-direction: column;
+    }
+  }
+  /* Base card styling */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  .card-content {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .card-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  
+  /* Specific styling for description */
+  .card-description p {
+    margin-bottom: 10px;
+  }
+  
+  .card-description ul {
+    padding-left: 20px;
+  }
+  
+  .card-description li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+  }
+  
+  /* Ensuring readability and aesthetics */
+  .class-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+  }
+  
+  .class-card {
+    margin-right: 20px;
+    width: 200px; /* Set a fixed width for the cards */
+    /* Add more styling here to match the design in the image */
+  }
+  
+  .class-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    /* Add more styling here */
+  }
+  
+  /* Add additional styles for the body of the class card, images, etc. */
+  
+  

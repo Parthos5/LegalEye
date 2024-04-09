@@ -2,7 +2,12 @@ import { useState } from 'react'
 import './App.css'
 import { BrowserRouter, Route ,Routes} from 'react-router-dom';
 import Home from './Pages/Home/Home.jsx';
-import Login from './Pages/Login/Login.jsx';
+import Govtlogin from './Pages/Govtlogin/Login.jsx';
+import Signin from './Pages/SignIn/Signin.jsx';
+import GFirst from './Pages/GFirst/GFirst.jsx';
+import SFirst from './Pages/SFirst/SFirst.jsx';
+import AddCase from './Pages/AddCase/AddCase.jsx';
+import UpdateCase from './Pages/UpdateCase/UpdateCase.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,8 +15,13 @@ function App() {
   return (
     <BrowserRouter>
     <Routes>
-    <Route path="/home" element={<Home />} /> 
-        <Route path="/" element={<Login />} /> 
+      <Route path="/" element={<Home />} /> 
+      <Route path="/login" element={<Govtlogin />} />  
+      <Route path="/Signin" element={<Signin />} />  
+      <Route path="/GFirst" element={<GFirst />} />
+      <Route path="/SFirst" element={<SFirst />} />
+      <Route path="/AddCase" element={<AddCase />} />
+      <Route path="/UpdateCase" element={<UpdateCase />} />
     </Routes>
   </BrowserRouter>
   )
