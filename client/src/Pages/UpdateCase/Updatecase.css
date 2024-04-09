@@ -1,0 +1,56 @@
+/* Updatecase.css - specific to the .update-case-form-container to avoid conflicts */
+
+.update-case-form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Distributes space between and around items */
+    align-items: flex-start; /* Align items at the start of the container */
+    background-color: #ffffff; /* White background */
+    padding: 20px; /* Padding inside the container */
+  }
+  
+  .update-case-form-container .case-card {
+    flex: 0 0 calc(50% - 40px); /* Do not grow or shrink, set basis */
+    border: 5px solid #3d2c22; /* Thick brown border */
+    background-color: #ffffff; /* White background for each card */
+    color: #3d2c22; /* Brown text color */
+    padding: 20px; /* Padding inside each card */
+    border-radius: 10px; /* Rounded corners */
+    margin-bottom: 20px; /* Margin at the bottom of each card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    height: fit-content; /* Fit height to content */
+  }
+  
+  .update-case-form-container .case-card h3 {
+    color: #d4af37; /* Gold color for case number */
+    margin-bottom: 15px; /* Margin below case number */
+  }
+  
+  .update-case-form-container .case-card p {
+    font-weight: bold; /* Bold font for case details */
+    margin: 5px 0; /* Margin around paragraphs */
+  }
+  
+  .update-case-form-container .case-card button {
+    background-color: #d4af37; /* Gold background for buttons */
+    color: #ffffff; /* White text color for buttons */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners for buttons */
+    cursor: pointer; /* Cursor pointer for buttons */
+    padding: 10px 20px; /* Padding inside buttons */
+    margin-top: 10px; /* Margin on top of buttons */
+    margin-right: 10px; /* Margin on right of buttons */
+    font-weight: bold; /* Bold font for button text */
+    transition: background-color 0.3s ease; /* Transition for background color change */
+  }
+  
+  .update-case-form-container .case-card button:hover {
+    background-color: #b38657; /* Darker gold color on hover */
+  }
+  
+  @media (max-width: 768px) {
+    .update-case-form-container .case-card {
+      flex-basis: 100%; /* Full width of the container on smaller screens */
+      max-width: 100%; /* Maximum width of 100% on smaller screens */
+    }
+  }
