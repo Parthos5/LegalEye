@@ -19,24 +19,54 @@ var updateSchema = new Schema({
 })
 
 var CaseSchema = new Schema({
-    ownerId: {
-        type: String,
+    plaintiffName: {
+        type: String
     },
-    title: {
-        type: String,
+    plaintiffLawyer: {
+        type: String
     },
-    categoryCode: {
-        type: Number,
+    defendantName: {
+        type: String
     },
-    category: {
-        type: String,
+    defendantLawyer: {
+        type: String
     },
-    subCategory: {
-        type: String,
+    judgeName: {
+        type: String
     },
-    description: {
-        type: String,
+    typeOfCourt: {
+        type: String
     },
+    typeOfCase: {
+        type: String
+    },
+    caseDescription: {
+        type: String
+    },
+    hearingDate: {
+        type: String
+    },
+    caseNumber: {
+        type: String
+    },
+    // ownerId: {
+    //     type: String,
+    // },
+    // title: {
+    //     type: String,
+    // },
+    // categoryCode: {
+    //     type: Number,
+    // },
+    // category: {
+    //     type: String,
+    // },
+    // subCategory: {
+    //     type: String,
+    // },
+    // description: {
+    //     type: String,
+    // },
     updates:[updateSchema],
     transcription: [TranscriptionSchema]
 })
