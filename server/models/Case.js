@@ -46,12 +46,12 @@ var CaseSchema = new Schema({
     hearingDate: {
         type: String
     },
-    caseNumber: {
-        type: String
-    },
-    // ownerId: {
-    //     type: String,
+    // caseNumber: {
+    //     type: String
     // },
+    ownerId: {
+        type: String,
+    },
     // title: {
     //     type: String,
     // },
