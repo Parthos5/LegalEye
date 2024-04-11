@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require("express");
 const app = express();
 const jwt = require("jsonwebtoken");
+const axios = require('axios');
 const cors = require("cors");
 const port = 5000;
 const mongoDB = require("./db");
@@ -11,6 +12,7 @@ mongoDB();
 
 app.use(cors());
 app.use(express.json());
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

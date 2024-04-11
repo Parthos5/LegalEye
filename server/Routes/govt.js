@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const axios = require('axios');
 const Govt = require("../models/Govt");
 const Case = require("../models/Case");
 
@@ -12,7 +12,7 @@ const bcrypt = require("bcrypt");
 //   try{
 //     const {username} = req.body;
 //     const govtUser = await Govt.findOne({ username });
-    
+
 //     if (!govtUser) {
 //       return res.status(401).json({ error: "Authentication failed." });
 //     }
@@ -20,27 +20,26 @@ const bcrypt = require("bcrypt");
 // })
 
 router.post("/signup", async (req, res) => {
-
-  let user = await Govt.findOne({ username: req.body.username })
+  let user = await Govt.findOne({ username: req.body.username });
   if (user) {
-      return res.status(400).send("Registration failed: User already exists!")
+    return res.status(400).send("Registration failed: User already exists!");
   } else {
-      try {
-          const salt = await bcrypt.genSalt(10)
-          const password = await bcrypt.hash(req.body.password, salt)
-          const newUser = new Govt({
-              username: req.body.username,
-              email: req.body.email,
-              password: password,
-              casesList:[]
-          })
-          await newUser.save()
-          return res.status(201).json(newUser)
-      } catch (err) {
-          return res.status(400).json({ message: err.message })
-      }
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const password = await bcrypt.hash(req.body.password, salt);
+      const newUser = new Govt({
+        username: req.body.username,
+        email: req.body.email,
+        password: password,
+        casesList: [],
+      });
+      await newUser.save();
+      return res.status(201).json(newUser);
+    } catch (err) {
+      return res.status(400).json({ message: err.message });
+    }
   }
-})
+});
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -75,7 +74,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/uploadCase", async (req, res) => {
   try {
-    const {categoryCode,category,subCategory,caseDescription} = req.body;
+    const { categoryCode, category, subCategory, caseDescription } = req.body;
     const token = req.headers.authorization;
 
     //verifying token
@@ -105,27 +104,25 @@ router.post("/uploadCase", async (req, res) => {
 });
 
 router.post("/uploadTranscript", async (req, res) => {
-  let caseId = req.body.caseId;
+  const { caseId, file_url } = req.body;
   let theCase = await Case.findById(caseId);
-  // let text from ml model;
-  // let date.now();
   console.log(theCase);
-  var transcriptionArr = theCase.transcription || [];
+  var transcriptionArr = [];
 
-  transcript_obj = {
-    text: req.body.text,
+  const resp = await axios.post("http://127.0.0.1:8080/transcribe", {
+    file_url,
+  });
+  const audioTranscript = await resp.data;
+  let transcription_obj = {
+    text: audioTranscript.transcript,
   };
 
-  transcriptionArr.push(transcript_obj);
-  theCase.transcription = transcriptionArr;
+  transcriptionArr.push(transcription_obj);
+  theCase.transcription.push(transcription_obj);
 
   await theCase.save();
 
-  res.status(200).json({ message: "this is upload transcript route" });
-  // // fetch transcript array
-  // let transcriptArr;
-  // let text = mlmodel;
-  // transcriptArr.append(mlmodel)
+  res.status(200).json({ Success: true, Transcription: transcriptionArr });
 });
 
 router.put("/updateCase", async (req, res) => {

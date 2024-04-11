@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 var TranscriptionSchema = new Schema({
     text: {
-        type: String,
+        type: Array,
     }
 }, {
     timestamps: true,
