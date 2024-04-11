@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 var TranscriptionSchema = new Schema({
     text: {
-        type: String,
+        type: Array,
     }
 }, {
     timestamps: true,
@@ -46,9 +46,9 @@ var CaseSchema = new Schema({
     hearingDate: {
         type: String
     },
-    // caseNumber: {
-    //     type: String
-    // },
+    caseNumber: {
+        type: String
+    },
     ownerId: {
         type: String,
     },
