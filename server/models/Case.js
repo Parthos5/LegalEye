@@ -49,9 +49,9 @@ var CaseSchema = new Schema({
     caseNumber: {
         type: String
     },
-    // ownerId: {
-    //     type: String,
-    // },
+    ownerId: {
+        type: String,
+    },
     // title: {
     //     type: String,
     // },

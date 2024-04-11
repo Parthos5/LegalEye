@@ -8,6 +8,39 @@ const jwt = require("jsonwebtoken");
 const secretKey = process.env.SECRET;
 const bcrypt = require("bcrypt");
 
+// router.post("/getUser",async (req,res) => {
+//   try{
+//     const {username} = req.body;
+//     const govtUser = await Govt.findOne({ username });
+    
+//     if (!govtUser) {
+//       return res.status(401).json({ error: "Authentication failed." });
+//     }
+//   }
+// })
+
+router.post("/signup", async (req, res) => {
+
+  let user = await Govt.findOne({ username: req.body.username })
+  if (user) {
+      return res.status(400).send("Registration failed: User already exists!")
+  } else {
+      try {
+          const salt = await bcrypt.genSalt(10)
+          const password = await bcrypt.hash(req.body.password, salt)
+          const newUser = new Govt({
+              username: req.body.username,
+              email: req.body.email,
+              password: password,
+              casesList:[]
+          })
+          await newUser.save()
+          return res.status(201).json(newUser)
+      } catch (err) {
+          return res.status(400).json({ message: err.message })
+      }
+  }
+})
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -42,7 +75,8 @@ router.post("/login", async (req, res) => {
 
 router.post("/uploadCase", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const {categoryCode,category,subCategory,caseDescription} = req.body;
+    const token = req.headers.authorization;
 
     //verifying token
     const decodedToken = jwt.verify(token, secretKey);
@@ -51,9 +85,9 @@ router.post("/uploadCase", async (req, res) => {
     const govtId = decodedToken.govtId;
 
     const newCase = new Case({
-      categoryCode: req.body.categoryCode,
-      category: req.body.category,
-      subCategory: req.body.subCategory,
+      categoryCode: categoryCode,
+      category: category,
+      subCategory: subCategory,
       // transcription: transcription.push({
       //     text: req.transcription.text,
       //     notes: req.transcription.notes
@@ -94,7 +128,26 @@ router.post("/uploadTranscript", async (req, res) => {
   // transcriptArr.append(mlmodel)
 });
 
-router.put("/updateCase", (req, res) => {
+router.put("/updateCase", async (req, res) => {
+  try {
+    const { caseDescription, caseId } = req.body;
+    if (!caseDescription || !caseId) {
+      res.status(400).json({ Error: "Missing data" });
+    }
+
+    const caseObj = await Case.findById(caseId);
+    if (!caseObj) {
+      res.status(400).json({ Error: "Case Not Found" });
+    }
+
+    if (caseDescription != "") {
+      caseObj.caseDescription = caseDescription;
+    }
+    caseObj.save();
+    res.status(200).json({ Success: true, Updated_case: caseObj });
+  } catch (err) {
+    res.status(200).json({ Error: err });
+  }
   res.status(200).json({ message: "this is update case route" });
 });
 
@@ -105,11 +158,10 @@ router.post("/deleteCase", async (req, res) => {
     if (!theCase) {
       res.status(400).json({ Error: "Case Not Found!" });
     }
-    if (!caseId.ownerId.toString() == govId.toString()) {
+    if (!(theCase.ownerId == govId)) {
       res.status(400).json({ Error: "Not Authorized" });
     }
-
-    await theCase.delete();
+    await theCase.deleteOne();
     res.status(200).json({ Success: "Case Deleted", Case: theCase });
   } catch (err) {
     res.status(500).json({ Error: err });
@@ -117,4 +169,3 @@ router.post("/deleteCase", async (req, res) => {
 });
 
 module.exports = router;
-//hi

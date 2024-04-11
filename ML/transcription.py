@@ -1,27 +1,32 @@
-# Start by making sure the `assemblyai` package is installed.
-# If not, you can install it by running the following command:
-# pip install -U assemblyai
-#
-# Note: Some macOS users may need to use `pip3` instead of `pip`.
-
+from flask import Flask, request, jsonify
 import assemblyai as aai
 
-# Replace with your API key
+app = Flask(__name__)
+
+# AssemblyAI API key
 aai.settings.api_key = "f43bf3801db444859001ba968f5133c6"
 
-# URL of the file to transcribe
-FILE_URL = "https://github.com/AssemblyAI-Examples/audio-examples/raw/main/20230607_me_canadian_wildfires.mp3"
+@app.route("/transcribe", methods=["POST"])
+def transcribe_audio():
+    try:
+        data = request.json
+        file_url = data.get("file_url")
 
-# You can also transcribe a local file by passing in a file path
-# FILE_URL = './path/to/file.mp3'
+        if not file_url:
+            return jsonify({"error": "File URL is missing"}), 400
 
-config = aai.TranscriptionConfig(speaker_labels=True)
+        config = aai.TranscriptionConfig(speaker_labels=True)
+        transcriber = aai.Transcriber()
+        transcript = transcriber.transcribe(file_url, config=config)
 
-transcriber = aai.Transcriber()
-transcript = transcriber.transcribe(
-  FILE_URL,
-  config=config
-)
+        # Extract speaker labels and text from the transcript
+        results = [{"speaker": u.speaker, "text": u.text} for u in transcript.utterances]
 
-for utterance in transcript.utterances:
-  print(f"Speaker {utterance.speaker}: {utterance.text}")
+        return jsonify({"transcript": results}), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Internal server error"}), 500
+
+if __name__ == "__main__":
+    app.run(port=8080)
