@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import './AddCase.css';
+import { useNavigate } from 'react-router-dom';
 
-export default async function AddCase() {
+export default function AddCase() {
 
-  const resp = await fetch("http://localhost:5000/govt/uploadCase", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json", 
-    },
-    body: JSON.stringify({
-      formState
-    })
-  }).then((data) => data.json())
+  const token = JSON.parse(localStorage.getItem("token"))
+  console.log(token)
+
+  const navigate = useNavigate()
 
   const [formState, setFormState] = useState({
     plaintiffLawyerName: '',
@@ -34,10 +30,27 @@ export default async function AddCase() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form data submitted:', formState);
     // Integration for data submission to server or state management system goes here
+    const resp = await fetch("http://localhost:5000/govt/uploadCase", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify({
+        formState
+      })
+    })
+
+    const caseId = await resp.json()
+    console.log(caseId)
+    
+    if(caseId) {
+      navigate(`/SinglePage/${caseId}`);
+    }
   };
 
   return (

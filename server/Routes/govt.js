@@ -74,7 +74,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/uploadCase", async (req, res) => {
   try {
-    const { categoryCode, category, subCategory, caseDescription } = req.body;
+    const { plaintiffName, plaintiffLawyerName, defendantName, defendantLawyerName, judgeName, courtType, caseType, caseDescription, hearingDate, caseNumber} = req.body.formState;
     const token = req.headers.authorization;
 
     //verifying token
@@ -84,20 +84,24 @@ router.post("/uploadCase", async (req, res) => {
     const govtId = decodedToken.govtId;
 
     const newCase = new Case({
-      categoryCode: categoryCode,
-      category: category,
-      subCategory: subCategory,
-      // transcription: transcription.push({
-      //     text: req.transcription.text,
-      //     notes: req.transcription.notes
-      // }),
+      plaintiffName: plaintiffName,
+      plaintiffLawyer: plaintiffLawyerName,
+      defendantName: defendantName,
+      defendantLawyer: defendantLawyerName,
+      judgeName: judgeName,
+      typeOfCourt: courtType,
+      typeOfCase: caseType,
+      caseDescription: caseDescription,
+      hearingDate: hearingDate,
+      caseNumber: caseNumber,
+      updates: [],
       transcription: [],
       ownerId: govtId,
     });
 
     const savedCase = await newCase.save();
 
-    res.status(200).json(savedCase);
+    res.status(200).json(savedCase.ownerId);
   } catch (error) {
     console.log(error);
   }
