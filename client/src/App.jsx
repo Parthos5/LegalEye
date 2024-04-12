@@ -8,6 +8,7 @@ import GFirst from './Pages/GFirst/GFirst.jsx';
 import SFirst from './Pages/SFirst/SFirst.jsx';
 import AddCase from './Pages/AddCase/AddCase.jsx';
 import UpdateCase from './Pages/UpdateCase/UpdateCase.jsx';
+import SingleCase from './Pages/SingleCase/SingleCase.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,6 +23,7 @@ function App() {
       <Route path="/SFirst" element={<SFirst />} />
       <Route path="/AddCase" element={<AddCase />} />
       <Route path="/UpdateCase" element={<UpdateCase />} />
+      <Route path="/SingleCase/:caseId" element={<SingleCase />} />
     </Routes>
   </BrowserRouter>
   )
