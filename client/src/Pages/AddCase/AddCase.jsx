@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import './AddCase.css';
 
-export default function AddCase() {
+export default async function AddCase() {
+
+  const resp = await fetch("http://localhost:5000/govt/uploadCase", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json", 
+    },
+    body: JSON.stringify({
+      formState
+    })
+  }).then((data) => data.json())
+
   const [formState, setFormState] = useState({
     plaintiffLawyerName: '',
     defendantLawyerName: '',
