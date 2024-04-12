@@ -3,9 +3,9 @@ import './SingleCase.css'; // Make sure the CSS file is imported
 
 const SingleCase = () => {
   const [editMode, setEditMode] = useState(false);
+  const [audios, setAudios] = useState([]); // Array to store audio files and dates
   const [audioFile, setAudioFile] = useState(null);
-  const [audioUrl, setAudioUrl] = useState('');
-  const [summary, setSummary] = useState('');
+  const [audioDate, setAudioDate] = useState('');
 
   // Hardcoded case data for display
   const caseData = {
@@ -26,16 +26,25 @@ const SingleCase = () => {
   };
 
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setAudioFile(file);
-    setAudioUrl(URL.createObjectURL(file));
+    setAudioFile(event.target.files[0]);
+  };
+
+  const handleDateChange = (event) => {
+    setAudioDate(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Here, you would normally process the file and update the summary.
-    // After processing, we'll just set a placeholder summary for now.
-    setSummary('Generated summary of the audio will appear here.');
+    const newAudioData = {
+      file: audioFile,
+      date: audioDate,
+      url: URL.createObjectURL(audioFile),
+      summary: 'Generated summary of the audio will appear here.' // Placeholder summary
+    };
+    setAudios(audios.concat(newAudioData)); // Add new audio data to the array
+    // Clear the input fields
+    setAudioFile(null);
+    setAudioDate('');
     setEditMode(false);
   };
 
@@ -45,17 +54,14 @@ const SingleCase = () => {
         <h1 className="single-case-title">Case Details</h1>
         <button onClick={handleEditClick} className="edit-button">Edit</button>
       </div>
-      <p className="case-detail"><strong>Plaintiff's Lawyer Name:</strong> {caseData.plaintiffLawyer}</p>
-      <p className="case-detail"><strong>Defendant's Lawyer Name:</strong> {caseData.defendantLawyer}</p>
-      <p className="case-detail"><strong>Plaintiff's Name:</strong> {caseData.plaintiff}</p>
-      <p className="case-detail"><strong>Defendant's Name:</strong> {caseData.defendant}</p>
-      <p className="case-detail"><strong>Judge's Name:</strong> {caseData.judge}</p>
-      <p className="case-detail"><strong>Type of Court:</strong> {caseData.courtType}</p>
-      <p className="case-detail"><strong>Type of Case:</strong> {caseData.caseType}</p>
-      <p className="case-detail"><strong>Case Description:</strong> {caseData.caseDescription}</p>
-      <p className="case-detail"><strong>Hearing Date:</strong> {caseData.hearingDate}</p>
-      <p className="case-detail"><strong>Case Number:</strong> {caseData.caseNumber}</p>
-
+      
+      {/* Display case data */}
+      {Object.entries(caseData).map(([key, value]) => (
+        <p className="case-detail" key={key}>
+          <strong>{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</strong> {value}
+        </p>
+      ))}
+      
       {editMode && (
         <div className="form-container">
           <form onSubmit={handleSubmit}>
@@ -66,21 +72,32 @@ const SingleCase = () => {
               accept="audio/*"
               onChange={handleFileChange}
             />
+            <label htmlFor="audioDate">Audio Date:</label>
+            <input
+              type="date"
+              id="audioDate"
+              value={audioDate}
+              onChange={handleDateChange}
+            />
             <button type="submit" className="submit-button">Submit</button>
           </form>
         </div>
       )}
-
-      {summary && <div className="summary">{summary}</div>}
-      {audioFile && (
-        <div className="audio-control">
-          <p className="audio-file-info">Audio File: {audioFile.name}</p>
+      
+      {/* Display submitted audio files and dates */}
+      {audios.map((audio, index) => (
+        <div key={index} className="audio-control">
+          <p className="audio-file-info">
+            <strong>Audio File:</strong> {audio.file.name}
+            <strong>Date:</strong> {audio.date}
+          </p>
           <audio controls>
-            <source src={audioUrl} type={audioFile.type} />
+            <source src={audio.url} type={audio.file.type} />
             Your browser does not support the audio element.
           </audio>
+          <p className="summary">{audio.summary}</p>
         </div>
-      )}
+      ))}
     </div>
   );
 };
