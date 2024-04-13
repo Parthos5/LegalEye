@@ -3,7 +3,7 @@ import assemblyai as aai
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
-
+import io
 app = Flask(__name__)
 
 # AssemblyAI API key
@@ -17,6 +17,15 @@ def transcribe_audio():
         print(request.files)
         print(request)
         # print(request.data)
+        files = request.files.getlist('file')
+    
+        for file in files:
+        # Print the file name and its content
+          print("File name:", file.filename)
+        # You can also print other properties like file content type, size, etc.
+        # For example:
+        # print("Content type:", file.content_type)
+        # print("Size:", len(file.read()))
         if 'audio_data' not in request.data:
             return jsonify({"error": "No audio file provided"}), 400
 
@@ -25,7 +34,7 @@ def transcribe_audio():
             return jsonify({"error": "Audio data is missing"}), 400
         
          # Convert the audio data to a bytes-like object
-        audio_bytes = io.BytesIO(audio_data)
+        # audio_bytes = io.BytesIO(audio_data)
         # Upload the audio file to Google Drive
         creds = service_account.Credentials.from_service_account_info(
             {
@@ -47,7 +56,7 @@ def transcribe_audio():
         )
         drive_service = build('drive', 'v3', credentials=creds)
         file_metadata = {'name': 'audio.mp3'}
-        media = MediaFileUpload(audio_bytes, resumable=True)
+        media = MediaFileUpload(audio_data, mimetype='audio/mpeg', resumable=True)
         file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
         file_url = f"https://drive.google.com/uc?export=view&id={file.get('id')}"
 
