@@ -58,6 +58,21 @@
     margin: 0 10px 20px 10px;
     text-align: justify;
   }
+
+  .bookmark-btn {
+    width: 40px;
+    background-color: #271c14;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.5s;
+    padding: 0px 0px;
+  }
+
+  .button{
+    padding: 0%;
+  }
   
   /* Responsive Adjustments */
   @media (max-width: 768px) {
