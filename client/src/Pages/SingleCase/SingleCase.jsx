@@ -1,25 +1,72 @@
-import React, { useState } from 'react';
-import './SingleCase.css'; // Make sure the CSS file is imported
+import React, { useEffect, useState } from "react";
+import "./SingleCase.css"; // Make sure the CSS file is imported
+import { useParams } from "react-router-dom";
 
 const SingleCase = () => {
+  const { caseId } = useParams();
   const [editMode, setEditMode] = useState(false);
   const [audios, setAudios] = useState([]); // Array to store audio files and dates
   const [audioFile, setAudioFile] = useState(null);
-  const [audioDate, setAudioDate] = useState('');
+  const [audioDate, setAudioDate] = useState("");
+  const [isIdMatch, setIsIdMatch] = useState(true);
 
   // Hardcoded case data for display
-  const caseData = {
+  const [caseData, setCaseData] = useState({
     plaintiffLawyer: "John Doe",
     defendantLawyer: "Jane Smith",
-    plaintiff: "Alice Johnson",
-    defendant: "Bob Brown",
-    judge: "Judge Judy",
-    courtType: "Civil Court",
-    caseType: "Contract Dispute",
+    plaintiffName: "Alice Johnson",
+    defendantName: "Bob Brown",
+    judgeName: "Judge Judy",
+    typeOfCourt: "Civil Court",
+    typeOfCase: "Contract Dispute",
     caseDescription: "Case of breach of contract",
     hearingDate: "15/04/2024",
-    caseNumber: "12345ABC"
+    caseNumber: "12345ABC",
+    // ownerId:""
+  });
+
+  const testUser = async () => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    console.log(token);
+    const resp = await fetch(
+      "http://localhost:5000/govt/getUser",
+      {
+        method: "POST",
+        headers:{
+          "Content-Type":"application/json" // Corrected typo here
+        },
+        body: JSON.stringify({ token: token }) // Pass token as an object property
+      }
+    );
+    const data = await resp.json();
+    console.log(data);
+    if(data._id == caseData._id){
+      setIsIdMatch(true);
+      console.log(isIdMatch)
+    }
+    else{
+      setIsIdMatch(false)
+      console.log(isIdMatch)
+    }
+  }
+  
+
+  const getCase = async () => {
+    const resp = await fetch(
+      `http://localhost:5000/cases/getCaseById/${caseId}`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await resp.json();
+    console.log(data);
+    setCaseData(data);
   };
+
+  useEffect(() => {
+    getCase();
+    testUser();
+  }, []);
 
   const handleEditClick = () => {
     setEditMode(true);
@@ -39,12 +86,12 @@ const SingleCase = () => {
       file: audioFile,
       date: audioDate,
       url: URL.createObjectURL(audioFile),
-      summary: 'Generated summary of the audio will appear here.' // Placeholder summary
+      summary: "Generated summary of the audio will appear here.", // Placeholder summary
     };
     setAudios(audios.concat(newAudioData)); // Add new audio data to the array
     // Clear the input fields
     setAudioFile(null);
-    setAudioDate('');
+    setAudioDate("");
     setEditMode(false);
   };
 
@@ -52,16 +99,26 @@ const SingleCase = () => {
     <div className="single-case">
       <div className="single-case-header">
         <h1 className="single-case-title">Case Details</h1>
-        <button onClick={handleEditClick} className="edit-button">Edit</button>
+        {isIdMatch && (
+          <button onClick={handleEditClick} className="edit-button">
+            Edit
+          </button>
+        )}
       </div>
-      
+
       {/* Display case data */}
       {Object.entries(caseData).map(([key, value]) => (
         <p className="case-detail" key={key}>
-          <strong>{key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:</strong> {value}
+          <strong>
+            {key
+              .replace(/([A-Z])/g, " $1")
+              .replace(/^./, (str) => str.toUpperCase())}
+            :
+          </strong>{" "}
+          {value}
         </p>
       ))}
-      
+
       {editMode && (
         <div className="form-container">
           <form onSubmit={handleSubmit}>
@@ -79,11 +136,13 @@ const SingleCase = () => {
               value={audioDate}
               onChange={handleDateChange}
             />
-            <button type="submit" className="submit-button">Submit</button>
+            <button type="submit" className="submit-button">
+              Submit
+            </button>
           </form>
         </div>
       )}
-      
+
       {/* Display submitted audio files and dates */}
       {audios.map((audio, index) => (
         <div key={index} className="audio-control">

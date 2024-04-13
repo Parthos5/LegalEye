@@ -8,16 +8,28 @@ const jwt = require("jsonwebtoken");
 const secretKey = process.env.SECRET;
 const bcrypt = require("bcrypt");
 
-// router.post("/getUser",async (req,res) => {
-//   try{
-//     const {username} = req.body;
-//     const govtUser = await Govt.findOne({ username });
+router.post("/getUser",async (req,res) => {
+  try{
+    // const token = req.headers.authorization;
+    const {token} = req.body
 
-//     if (!govtUser) {
-//       return res.status(401).json({ error: "Authentication failed." });
-//     }
-//   }
-// })
+    //verifying token
+    const decodedToken = jwt.verify(token, secretKey);
+    console.log(decodedToken);
+    //extract govtId
+    const userId = decodedToken.govtId;
+    // const {username} = req.body;
+    const User = await Govt.findById(userId);
+    if (!User) {
+      return res.status(401).json({ error: "Authentication failed." });
+    }
+    res.status(200).json({User})
+  }catch(err){
+    res.status(500).json({err})
+  }
+}
+)
+
 
 router.post("/signup", async (req, res) => {
   let user = await Govt.findOne({ username: req.body.username });
