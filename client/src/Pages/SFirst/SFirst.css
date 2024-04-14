@@ -1,11 +1,11 @@
 /* Navbar and Search/Filter Styles */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #f5f5f5;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
   
   .navbar input,
   .navbar select {
@@ -58,6 +58,21 @@
     margin: 0 10px 20px 10px;
     text-align: justify;
   }
+
+  .bookmark-btn {
+    width: 40px;
+    background-color: #271c14;
+    height: 40px;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.5s;
+    padding: 0px 0px;
+  }
+
+  .button{
+    padding: 0%;
+  }
   
   /* Responsive Adjustments */
   @media (max-width: 768px) {
@@ -82,6 +97,11 @@
     }
   }
   /* Base card styling */
+
+  .content {
+    padding: 20px;
+  }
+
 .card {
     background-color: #fff;
     border-radius: 8px;
@@ -136,26 +156,106 @@
   }
   
   /* Ensuring readability and aesthetics */
-  .class-container {
+  .cards-container {
     display: flex;
-    overflow-x: auto;
-    padding: 20px;
+    overflow-x: auto; /* Allow horizontal scrolling */
+    scroll-behavior: smooth; /* Smooth scroll on arrow click */
+    -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
   }
   
   .class-card {
-    margin-right: 20px;
-    width: 200px; /* Set a fixed width for the cards */
-    /* Add more styling here to match the design in the image */
+    flex: 0 0 auto; /* Prevent the card from growing or shrinking */
+    border: 2px solid #d4af37;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 20px 20px; /* Adjust space between cards */
+    background-color: #f5f5dc;
+    width: 300px; /* Adjust the width as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
+  
+  .class-card h3,
+.class-card p {
+  margin: 10px 0; /* Adjust top and bottom margins */
+  white-space: normal; /* Allows text to wrap */
+  overflow-wrap: break-word; /* Allows long words to be broken and wrapped onto the next line */
+}
+  .cards-slider {
+    position: relative;
+    padding: 0 20px; /* Provide space for the arrows */
+  }
+  
+    
+  .slide-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #8b4513;
+    border: 1px solid #ddd; /* Adding a border for visibility */
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .left-arrow {
+  left: 0;
+}
+
+.right-arrow {
+  right: 0;
+}
+
+  /* Rest of the styles remain the same */
   
   .class-card-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 10px;
-    /* Add more styling here */
+    align-items: center;
+    margin-bottom: 16px; /* Adjust space between header and body */
   }
   
-  /* Add additional styles for the body of the class card, images, etc. */
+  /* Make sure the bookmark button does not cause overflow */
+  .bookmark-btn {
+    /* Your existing styles */
+    margin-left: auto; /* This will push the bookmark button to the right side */
+  }
+  .law {
+    display: block;
+    font-weight: bold;
+    color: #c94c4c; /* Example: make the law category blue */
+  }
   
+  h3 {
+    margin: 10px 0; /* Adjusts the margin around the h3 title */
+  }
   
+  p {
+    color: #555; /* Sets the color of the paragraph, likely for the lawyer's name */
+  }
+  
+  .cards-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in Chrome/Safari/Opera */
+  }
+
+  @media (max-width: 768px) {
+    /* Adjust for tablet screens */
+    .class-card {
+      width: calc(50% - 40px);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Adjust for mobile screens */
+    .class-card {
+      width: calc(100% - 40px);
+    }
+  
+    .navbar {
+      flex-direction: column;
+    }
+  }

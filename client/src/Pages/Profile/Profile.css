@@ -1,0 +1,90 @@
+.profile-container {
+    border-radius: 0; /* Removing the border radius for a full-width look */
+    box-shadow: none; /* Optional: remove box-shadow for a flat design */
+    padding: 20px;
+    margin: 0; /* Extend to the full width without margins */
+    width: 100%;
+  }
+
+  .profile-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .profile-container h2, .profile-container h3 {
+    color: #8b4513; /* SaddleBrown */
+  }
+  
+  .profile-container p, .profile-container li {
+    color: #654321; /* Dark brown */
+    font-size: 16px;
+  }
+  
+  .profile-container h3 {
+    border-bottom: 2px solid #d4af37; /* Golden */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .profile-container li {
+    background-color: #f5f5dc; /* Beige */
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex; /* Use flex to lay out the contents */
+    justify-content: space-between; /* Space between case details and delete button */
+    align-items: center; /* Center items vertically */
+  }
+  
+  .profile-container h4 {
+    color: #d4af37; /* Golden */
+    margin: 0; /* Remove margin to avoid extra spacing */
+  }
+  
+  .profile-container > div {
+    margin-bottom: 20px;
+  }
+  
+  .profile-container input, .profile-container button {
+    padding: 8px;
+    border: 1px solid #d4af37;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  
+  .profile-container button {
+    background-color: #d4af37;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .profile-container button:hover {
+    background-color: #b8860b; /* Dark golden rod */
+  }
+  
+  /* Adding style for delete button */
+  .profile-container .delete-button {
+    background-color: #c94c4c; /* Red for delete button */
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    /* Adjustments for better positioning can go here */
+  }
+  
+  .profile-container .delete-button:hover {
+    background-color: #a43535; /* Darker shade of red for hover effect */
+  }
+  
+  .profile-container .case-details {
+    flex-grow: 1; /* Case details take up the remaining space */
+    margin-right: 15px; /* Ensure there's some space before the delete button */
+  }
+  
+  

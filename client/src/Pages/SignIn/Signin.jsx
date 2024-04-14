@@ -8,7 +8,6 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission
-
     navigate('/SFirst'); // Navigate to SFirst page
   };
 
