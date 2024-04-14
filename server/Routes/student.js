@@ -21,7 +21,9 @@ router.post("/signup", async (req, res) => {
             const newUser = new Student({
                 username: req.body.username,
                 email: req.body.email,
-                password: password
+                password: password,
+                collegeName: req.body.collegeName,
+                gradYear: req.body.gradYear
             })
             await newUser.save()
             return res.status(201).json(newUser)
@@ -60,30 +62,29 @@ router.post("/login", async (req, res) => {
 
 router.post("/bookmark", async (req, res) => {
     try {
-        const token = req.headers.authorization.split(' ')[1]
-
-        //verifying token
-        const decodedToken = jwt.verify(token, secretKey)
-        console.log(decodedToken)
-
-        const studentId = decodedToken.studentId
-
-        // verifyStudentId()
-
-        const { caseId } = req.body
+        const token = req.headers.authorization.split(' ')[1];
+        // Verifying token
+        const decodedToken = jwt.verify(token, secretKey);
+        const studentId = decodedToken.studentId;
+        const { caseId } = req.body;
 
         const student = await Student.findById(studentId);
         if (!student) {
-            res.status(400).send("Account doesn't exist")
+            return res.status(400).send("Account doesn't exist");
+        }
+        const index = student.bookmarked.indexOf(caseId);
+        if (index === -1) {
+            student.bookmarked.push(caseId);
+        } else {
+            student.bookmarked.splice(index, 1);
         }
 
-        student.bookmarked.push(caseId);
-        await student.save()
+        await student.save();
 
-        return res.status(200).json({ message: "Case bookmarked successfully" });
+        return res.status(200).json({ message: "Case bookmark toggled successfully" });
 
     } catch (error) {
-        return res.status(400).json({ message: error.message })
+        return res.status(400).json({ message: error.message });
     }
 })
 
