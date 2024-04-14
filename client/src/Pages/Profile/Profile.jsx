@@ -5,8 +5,8 @@ export default function Profile() {
   const student = {
     studentName: 'John Doe',
     collegeName: 'Tech University',
-    referralCode: 'TU12345',
-    email: 'john.doe@example.com'
+    email: 'john.doe@example.com',
+    username:"John_Doe"
   };
 
   const bookmarkedCases = [
@@ -49,7 +49,8 @@ export default function Profile() {
         <h3>Student Information</h3>
         <p><strong>Name:</strong> {student.studentName}</p>
         <p><strong>College Name:</strong> {student.collegeName}</p>
-        <p><strong>Referral Code:</strong> {student.referralCode}</p>
+        <p><strong>Username:</strong> {student.username}</p>
+        {/* <p><strong>Referral Code:</strong> {student.referralCode}</p> */}
         <p><strong>Email:</strong> {student.email}</p>
       </div>
       

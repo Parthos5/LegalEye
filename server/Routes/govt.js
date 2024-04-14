@@ -7,6 +7,7 @@ const Case = require("../models/Case");
 const jwt = require("jsonwebtoken");
 const secretKey = process.env.SECRET;
 const bcrypt = require("bcrypt");
+const Student = require("../models/Student");
 
 router.post("/getUser",async (req,res) => {
   try{
@@ -20,10 +21,14 @@ router.post("/getUser",async (req,res) => {
     const userId = decodedToken.govtId;
     // const {username} = req.body;
     const User = await Govt.findById(userId);
-    if (!User) {
-      return res.status(401).json({ error: "Authentication failed." });
+    if (User) {
+      return res.status(200).json({User,userType:"govt"})
     }
-    res.status(200).json({User})
+    const User2 = await Student.findById(userId);
+    if (User) {
+      return res.status(200).json({User,userType:"student"})
+    }
+    return res.status(200).json({Message:"User not Found"})
   }catch(err){
     res.status(500).json({err})
   }

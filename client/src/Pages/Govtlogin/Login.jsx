@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './Login.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import "./Login.css";
 
 export default function Govtlogin() {
   const navigate = useNavigate(); // Create navigate function
@@ -12,8 +12,8 @@ export default function Govtlogin() {
     event.preventDefault(); // Prevent default form submission
     // Implement your login logic here
     // If login is successful, navigate to First.jsx
-    console.log(username)
-    console.log(password)
+    console.log(username);
+    console.log(password);
 
     const resp = await fetch("http://localhost:5000/govt/login", {
       method: "POST",
@@ -21,19 +21,19 @@ export default function Govtlogin() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username, password
-      })
-    }).then((data) => data.json())
+        username,
+        password,
+      }),
+    }).then((data) => data.json());
 
-    console.log(resp.success)
+    console.log(resp.success);
 
-    if(resp.success) {
-      localStorage.setItem("token", JSON.stringify(resp.token))
-      localStorage.setItem("govtId", JSON.stringify(resp.govtId))
-
-      navigate('/GFirst'); // Adjust the path as needed based on your routing setup
+    if (resp.success) {
+      localStorage.setItem("token", JSON.stringify(resp.token));
+      localStorage.setItem("userId", JSON.stringify(resp.govtId));
+      
+      navigate("/SFirst"); // Adjust the path as needed based on your routing setup
     }
-
   };
 
   return (
@@ -44,11 +44,21 @@ export default function Govtlogin() {
             <h2 className="title">Sign in</h2>
             <div className="input-field">
               <i className="fas fa-user"></i>
-              <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+              <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
             </div>
             <div className="input-field">
               <i className="fas fa-lock"></i>
-              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <input type="submit" value="Login" className="btn solid" />
           </form>
