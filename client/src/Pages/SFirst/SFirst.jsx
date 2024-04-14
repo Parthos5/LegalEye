@@ -234,6 +234,7 @@ export default function SFirst() {
               {/* Placeholder option */}
               <option value="/AddCase">Add Case</option>
               <option value="/UpdateCase">Update Case</option>
+              <option value="/UploadTranscription">Upload Transcription</option>
             </select>
           </div>
         )}

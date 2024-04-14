@@ -10,6 +10,7 @@ import AddCase from './Pages/AddCase/AddCase.jsx';
 import UpdateCase from './Pages/UpdateCase/UpdateCase.jsx';
 import SingleCase from './Pages/SingleCase/SingleCase.jsx';
 import Profile from './Pages/Profile/Profile.jsx';
+import UploadTranscription from './Pages/UploadTranscription/UploadTranscription.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -26,6 +27,7 @@ function App() {
       <Route path="/UpdateCase" element={<UpdateCase />} />
       <Route path="/SingleCase/:caseId" element={<SingleCase />} />
       <Route path="/Profile" element={<Profile />} />
+      <Route path="/UploadTranscription" element={<UploadTranscription />} />
     </Routes>
   </BrowserRouter>
   )

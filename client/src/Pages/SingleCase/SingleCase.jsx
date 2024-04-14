@@ -25,33 +25,28 @@ const SingleCase = () => {
     // ownerId:""
   });
 
-
   const testUser = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
     console.log(token);
-    const resp = await fetch(
-      "http://localhost:5000/govt/getUser",
-      {
-        method: "POST",
-        headers:{
-          "Content-Type":"application/json" // Corrected typo here
-        },
-        body: JSON.stringify({ token: token }) // Pass token as an object property
-      }
-    );
+    const resp = await fetch("http://localhost:5000/govt/getUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Corrected typo here
+      },
+      body: JSON.stringify({ token: token }), // Pass token as an object property
+    });
     const data = await resp.json();
     console.log(data);
-    // if()
-    if(data.User._id == caseData.ownerId){
+    console.log(data.User._id);
+    console.log(caseData.ownerId)
+    if (data.User._id == caseData.ownerId) {
       setIsIdMatch(true);
-      console.log(isIdMatch)
+      console.log(isIdMatch);
+    } else {
+      setIsIdMatch(false);
+      console.log(isIdMatch);
     }
-    else{
-      setIsIdMatch(false)
-      console.log(isIdMatch)
-    }
-  }
-  
+  };
 
   const getCase = async () => {
     const resp = await fetch(
@@ -64,13 +59,13 @@ const SingleCase = () => {
     console.log(data);
     setCaseData(data);
 
-    const viewresp = await fetch("http://localhost:5000/cases/addViews",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+    const viewresp = await fetch("http://localhost:5000/cases/addViews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify({caseId})
-    })
+      body: JSON.stringify({ caseId }),
+    });
   };
 
   useEffect(() => {
@@ -109,7 +104,7 @@ const SingleCase = () => {
     <div className="single-case">
       <div className="single-case-header">
         <h1 className="single-case-title">Case Details</h1>
-        {isIdMatch  && (
+        {isIdMatch && (
           <button onClick={handleEditClick} className="edit-button">
             Edit
           </button>
