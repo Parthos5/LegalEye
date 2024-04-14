@@ -19,6 +19,9 @@ var updateSchema = new Schema({
 })
 
 var CaseSchema = new Schema({
+    title:{
+        type:String
+    },
     plaintiffName: {
         type: String
     },
@@ -52,21 +55,10 @@ var CaseSchema = new Schema({
     ownerId: {
         type: String,
     },
-    // title: {
-    //     type: String,
-    // },
-    // categoryCode: {
-    //     type: Number,
-    // },
-    // category: {
-    //     type: String,
-    // },
-    // subCategory: {
-    //     type: String,
-    // },
-    // description: {
-    //     type: String,
-    // },
+    totalViews:{
+        type:Number,
+        default: 0
+    },
     updates:[updateSchema],
     transcription: [TranscriptionSchema]
 })
