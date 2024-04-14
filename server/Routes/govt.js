@@ -18,13 +18,19 @@ router.post("/getUser",async (req,res) => {
     const decodedToken = jwt.verify(token, secretKey);
     console.log(decodedToken);
     //extract govtId
-    const userId = decodedToken.govtId;
+    let userId;
+    if(decodedToken.govtId){
+      userId = decodedToken.govtId;
+    }
+    else{
+      userId = decodedToken.studentId;
+    }
     // const {username} = req.body;
-    const User = await Govt.findById(userId);
+    let User = await Govt.findById(userId);
     if (User) {
       return res.status(200).json({User,userType:"govt"})
     }
-    const User2 = await Student.findById(userId);
+    User = await Student.findById(userId);
     if (User) {
       return res.status(200).json({User,userType:"student"})
     }
@@ -91,7 +97,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/uploadCase", async (req, res) => {
   try {
-    const { plaintiffName, plaintiffLawyerName, defendantName, defendantLawyerName, judgeName, courtType, caseType, caseDescription, hearingDate, caseNumber} = req.body.formState;
+    const { plaintiffName, plaintiffLawyerName, defendantName, defendantLawyerName, judgeName, typeOfCase,typeOfCourt, caseDescription, hearingDate, caseNumber,title,totalViews} = req.body;
     const token = req.headers.authorization;
 
     //verifying token
@@ -106,19 +112,21 @@ router.post("/uploadCase", async (req, res) => {
       defendantName: defendantName,
       defendantLawyer: defendantLawyerName,
       judgeName: judgeName,
-      typeOfCourt: courtType,
-      typeOfCase: caseType,
+      typeOfCourt:typeOfCourt,
+      typeOfCase:typeOfCase,
       caseDescription: caseDescription,
       hearingDate: hearingDate,
       caseNumber: caseNumber,
       updates: [],
       transcription: [],
       ownerId: govtId,
+      title:title,
+      totalViews:totalViews
     });
 
     const savedCase = await newCase.save();
 
-    res.status(200).json(savedCase.ownerId);
+    res.status(200).json({ownerId:savedCase.ownerId,savedCase});
   } catch (error) {
     console.log(error);
   }

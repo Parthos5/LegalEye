@@ -12,7 +12,6 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.get("/getAllCases", async (req, res) => {
   try {
     const cases = await Case.find({});
-
     if (!cases) {
       return res.status(404).json({ message: "Cases not found." });
     }
@@ -47,6 +46,17 @@ router.get("/getCaseById/:id", async (req, res) => {
       return res.status(404).json({ message: "Case not found." });
     }
     res.status(200).json(caseReqd);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
+router.get("/getCasesByViews", async (req, res) => {
+  try {
+    const cases = await Case.find({})
+      .sort({ totalViews: -1 }) // Assuming `views` is the attribute representing views
+      .limit(20);
+    res.status(200).json(cases);
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -119,11 +129,28 @@ router.post("/uploadDrive", upload.single("audio"), async (req, res) => {
     console.log("File uploaded, File Id:", fileId);
     const fileUrl = uploadedFile.data.webViewLink;
     const directDownloadLink = `https://drive.google.com/uc?id=${fileId}&export=download`;
-    res.status(200).json({ fileId: fileId, fileUrl: fileUrl,directDownloadLink });
+    res
+      .status(200)
+      .json({ fileId: fileId, fileUrl: fileUrl, directDownloadLink });
   } catch (error) {
     console.error("Error uploading file:", error);
     res.status(500).send("Error uploading file to Google Drive");
   }
 });
+
+router.post("/addViews",async (req,res) => {
+  try {
+    const {caseId} = req.body;
+    const caseObj = await Case.findById(caseId)
+    if (!caseObj) {
+      return res.status(404).json({ message: "Case not found." });
+    }
+    caseObj.totalViews += 1;
+    caseObj.save();
+    res.status(200).json(caseObj);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+})
 
 module.exports = router;
