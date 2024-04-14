@@ -88,4 +88,10 @@
     width: 100%;
     margin-top: 1rem;
   }
+
+  .transcriptionItemDiv{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
   

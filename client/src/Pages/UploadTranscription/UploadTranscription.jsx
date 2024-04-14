@@ -7,6 +7,9 @@ export default function UploadTranscription() {
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [transcription, setTranscription] = useState([]);
+  const [transcriptDone, settranscriptDone] = useState(false);
+  const [myCases, setMyCases] = useState([]);
+  const [selectedItemId, setSelectedItemId] = useState(null); 
   const canvasRef = useRef(null); // Add a ref for the canvas element
 
   useEffect(() => {
@@ -16,6 +19,7 @@ export default function UploadTranscription() {
     let raf;
     let audioContext;
 
+    getCasesById();
     if (raf) {
       cancelAnimationFrame(raf);
     }
@@ -146,6 +150,22 @@ export default function UploadTranscription() {
     })();
   }, []);
 
+  const publishTranscript = async (id, transcript) => {
+    try {
+      const response = await fetch("http://localhost:5000/govt/uploadTranscript", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ caseId: selectedItemId, transcription_obj: { text: transcript } }),
+      });
+      const data = await response.json();
+      console.log(data); // Log the response
+    } catch (error) {
+      console.error("Error adding transcript:", error);
+    }
+  };
+
   const startRecording = () => {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
@@ -190,12 +210,42 @@ export default function UploadTranscription() {
         },
         body: JSON.stringify({ file_url: data.directDownloadLink }),
       });
+
       const transcript = await transcriptReq.json();
+      console.log(transcript);
+      console.log(transcript.transcript)
+      settranscriptDone(true);
       setTranscription(transcript.transcript);
     } else {
       console.error("No audio recorded");
     }
   };
+
+  const getCasesById = () => {
+    const userId = JSON.parse(localStorage.getItem("userId"));
+
+    // Ensure userId is not null or undefined
+    if (!userId) {
+      console.error("User ID not found in local storage");
+      return;
+    }
+
+    fetch("http://localhost:5000/cases/getCasesByUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ govtId: userId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setMyCases(data.cases);
+      })
+      .catch((error) => console.error("Error fetching cases by ID:", error));
+  };
+
+  // const finalTranscriptPublish = () => {};
 
   return (
     <div className="transcriptContainer">
@@ -219,12 +269,39 @@ export default function UploadTranscription() {
         )}
       </div>
       <canvas ref={canvasRef} id="output" width="400" height="400"></canvas>
-      {transcription.map((item, index) => (
-        <p key={index}>
-          <strong>Speaker {item.speaker}: </strong>
-          {item.text}
-        </p>
-      ))}
+
+      {transcriptDone && (
+        <h2 style={{ marginBottom: "20px" }}>Audio Transcription:</h2>
+      )}
+      <div className="transcriptTextDiv">
+        {transcription.map((item, index) => (
+          <p key={index}>
+            <strong>Speaker {item.speaker}: </strong>
+            {item.text}
+          </p>
+        ))}
+        {transcriptDone && (
+          <div className="transcriptionHeader">
+            <div className="formContainer">
+              <select onChange={(e) => {setSelectedItemId(e.target.value);
+              console.log(selectedItemId)
+              }}>
+                {myCases.map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.title}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={() => publishTranscript(selectedItemId, transcription)}
+                type="submit"
+              >
+                Add Transcript
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

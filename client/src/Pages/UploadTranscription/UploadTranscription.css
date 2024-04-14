@@ -52,3 +52,22 @@
   .audioControls button {
     margin-right: 10px;
   }
+
+  .transcriptTextDiv{
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    align-items: center;
+  }
+  .transcriptionHeader {
+    display: flex;
+    align-items: center;
+  }
+  
+  .formContainer {
+    margin-left: auto; /* Pushes the form to the right */
+    display: flex;
+    gap: 10px; /* Adjust the gap between select and button */
+  }
+  
