@@ -135,27 +135,71 @@
     margin-bottom: 5px;
   }
   
-  /* Ensuring readability and aesthetics */
-  .class-container {
+  .cards-container {
     display: flex;
-    overflow-x: auto;
-    padding: 20px;
+    overflow-x: hidden; /* Enables horizontal scrolling */
+    white-space: nowrap; /* Ensures the elements stay in a single line */
+    gap: 20px; /* Adjust the space between cards */
+    padding: 20px 0; /* Adds some padding at the top and bottom */
+    scroll-behavior: smooth;
   }
   
   .class-card {
-    margin-right: 20px;
-    width: 200px; /* Set a fixed width for the cards */
-    /* Add more styling here to match the design in the image */
+    display: inline-block; /* Allows for horizontal layout without wrapping */
+    flex: 0 0 auto; /* Prevents the card from growing or shrinking */
+    border: 3px solid #d4af37;
+    border-radius: 10px;
+    padding: 16px;
+    background-color: #f5f5dc;
+    width: 250px; /* Adjust the width as needed */
+    margin-right: 10px; /* Adjust the space between cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .class-card-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 10px;
-    /* Add more styling here */
+    align-items: center;
+    margin-bottom: 16px; /* Adjust space between header and body */
+  }
+
+  .law {
+    display: block;
+    font-weight: bold;
+    color: #f62e2e; /* Example: make the law category blue */
+  }
+
+  h3 {
+    margin: 10px 0; /* Adjusts the margin around the h3 title */
   }
   
-  /* Add additional styles for the body of the class card, images, etc. */
+  p {
+    color: #555; /* Sets the color of the paragraph, likely for the lawyer's name */
+  }
   
+  .scroll-container {
+    position: relative;
+  }
   
+  .scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ddd; /* Or any color you prefer */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .left-arrow {
+    left: 0;
+  }
+  
+  .right-arrow {
+    right: 0;
+  }
+
+  .class-container::-webkit-scrollbar {
+    display: none;
+  }

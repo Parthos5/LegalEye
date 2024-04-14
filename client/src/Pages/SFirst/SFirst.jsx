@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef  } from 'react';
 import './SFirst.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faPlayCircle,faBookmark } from '@fortawesome/free-solid-svg-icons'; // Make sure you have faPlayCircle imported
@@ -15,6 +15,21 @@ import { useNavigate } from 'react-router-dom';
 export default function SFirst() {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+
+  const scrollRef = useRef(null);
+
+  // Function to handle scrolling
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = 300; // Define the scroll amount
+      const { current } = scrollRef;
+      if (direction === 'right') {
+        current.scrollLeft += scrollAmount;
+      } else if (direction === 'left') {
+        current.scrollLeft -= scrollAmount;
+      }
+    }
+  };
 
   // Sample data for cases
   const cases = [
@@ -79,6 +94,22 @@ export default function SFirst() {
       law: "Legal Law",
       title: "The Famous Divorce",
       views: "103K",
+      language: "English"
+    },
+    {
+      id: 4,
+      lawyerName: "Parth Puranik",
+      law: "Litigation",
+      title: "Dowry",
+      views: "69K",
+      language: "English"
+    },
+    {
+      id: 5,
+      lawyerName: "Arvind Kalia",
+      law: "Crime",
+      title: "Forgeries",
+      views: "7k",
       language: "English"
     },
     {
@@ -166,21 +197,36 @@ export default function SFirst() {
           ))}
         </div>
         <h2>Most engaging Cases of 2023</h2>
-        <div className="class-container">
-          {filteredClasses.map(classItem => (
-            <div className="class-card" key={classItem.id}>
-              <div className="class-card-header">                
-                <span>{classItem.views}</span>
-                <button type="button" class="bookmark-btn btn"> <FontAwesomeIcon icon={faBookmark}></FontAwesomeIcon> </button>
+
+        <div className="cards-slider">
+          <button className="slide-arrow left-arrow" onClick={() => scroll('left')}>
+            &lt;
+          </button>
+
+          <div className="cards-container" ref={scrollRef}>
+            {filteredClasses.map(classItem => (
+              <div className="class-card" key={classItem.id}>
+                <div className="class-card-header">                
+                  <span>{classItem.views}</span>
+                  <button type="button" className="bookmark-btn btn">
+                    <FontAwesomeIcon icon={faBookmark} />
+                  </button>
+                </div>
+                <div className="class-card-body">
+                  <span className="law">{classItem.law}</span>
+                  <h3>{classItem.title}</h3>
+                  <p>{classItem.lawyerName}</p>
+                </div>
               </div>
-              <div className="class-card-body">
-                <span className="law">{classItem.law}</span>
-                <h3>{classItem.title}</h3>
-                <p>{classItem.lawyerName}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <button className="slide-arrow right-arrow" onClick={() => scroll('right')}>
+            &gt;
+          </button>
         </div>
+
+
       </div>
     </div>
   );
