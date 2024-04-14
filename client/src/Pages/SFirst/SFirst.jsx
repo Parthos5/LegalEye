@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef  } from 'react';
 import './SFirst.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faPlayCircle } from '@fortawesome/free-solid-svg-icons'; // Make sure you have faPlayCircle imported
+import { faUser, faPlayCircle,faBookmark } from '@fortawesome/free-solid-svg-icons'; // Make sure you have faPlayCircle imported
 import LogoImage from '../../assets/LOGO.png';
 import adminlaw from '../../assets/adminlaw.webp';
 import civillaw from '../../assets/civillaw.webp';
@@ -9,46 +9,64 @@ import corplaw from '../../assets/corplaw.webp';
 import criminallaw from '../../assets/Criminallaw.webp';
 import intlaw from '../../assets/intlaw.webp';
 import publiclaw from '../../assets/publiclaw.webp';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function SFirst() {
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const scrollRef = useRef(null);
+
+  // Function to handle scrolling
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = 300; // Define the scroll amount
+      const { current } = scrollRef;
+      if (direction === 'right') {
+        current.scrollLeft += scrollAmount;
+      } else if (direction === 'left') {
+        current.scrollLeft -= scrollAmount;
+      }
+    }
+  };
 
   // Sample data for cases
   const cases = [
       {
         id: 1,
         title: "Criminal Law",
-        description: "Homicide Cases: Involving unlawful death, including murder and manslaughter. Theft and Burglary: Involving property theft, break-ins, and robbery. Drug-Related Crimes: Including possession, distribution, and manufacturing of illegal substances. Assault and Battery: Involving physical harm or threats to a person. DUI/DWI Cases: Relating to driving under the influence of alcohol or drugs.",
+        description: "Homicide & Theft : Unlawful death cases and burglary incidents. Drug Crimes & Assault : Substance-related offenses and harm-related violations, including DUI/DWI.",
         imageUrl: criminallaw
       },
       {
         id: 2,
         title: "Civil Law",
-        description: "Contract Disputes: Involving disagreements over the terms and enforcement of contracts. Torts: Including personal injury cases, negligence, and defamation. Property Disputes: Covering issues like boundary disputes, zoning, and property damage. Family Law: Encompassing divorce, child custody, and adoption. Estate Planning and Probate: Involving wills, trusts, and estate management.",
+        description: "Contract, Torts, & Property Disputes: Contract enforcement, personal injury, and zoning issues. Family Law & Estate Planning: Covers divorce, custody, and estate management.",
         imageUrl: civillaw
       },
       {
         id: 3,
         title: "Commercial and Corporate Law",
-        description: "Intellectual Property: Covering patents, copyrights, trademarks, and trade secrets. Employment Law: Involving wrongful termination, discrimination, and workplace safety. Bankruptcy: Covering both individual and corporate bankruptcy proceedings. Securities Law: Involving stock market fraud, insider trading, and compliance with financial regulations.",
+        description: "Intellectual Property & Employment Law: Patent/trademark issues and workplace disputes. Bankruptcy & Securities: Insolvency cases and financial market compliance.",
         imageUrl: corplaw
       },
       {
         id: 4,
         title: "Administrative Law",
-        description: "Immigration Law: Covering visas, asylum, deportation, and citizenship issues. Social Security and Disability Claims: Involving disputes over benefits and entitlements. Licensing Issues: Related to professional licensure and regulatory compliance.",
+        description: "Immigration Law : Issues with visas, asylum and citizenship. Social Security / Disability and Licensing : Benefit disputes and regulatory compliance.",
         imageUrl: adminlaw
       },
       {
         id: 5,
         title: "International Law",
-        description: "Human Rights Cases: Involving allegations of human rights violations. Trade Disputes: Covering international trade agreements and disputes. Environmental Law: Addressing international environmental protection efforts.",
+        description: "Human Rights Cases : Allegations of rights violations. Trade & Environmental Law : International trade disputes and environmental protection.",
         imageUrl: intlaw
       },
       {
         id: 6,
         title: "Public Law",
-        description: "Constitutional Law: Involving issues related to the interpretation and application of the constitution. Tax Law: Covering disputes over tax obligations with government entities.",
+        description: "Constitutional Law : Interpretation / application of constitutional issues. Tax Law: Disputes on tax obligations.",
         imageUrl: publiclaw
       }
   ];
@@ -70,6 +88,46 @@ export default function SFirst() {
       views: "1.3K",
       language: "English"
     },
+    {
+      id: 3,
+      lawyerName: "Shruti Punjabi",
+      law: "Legal Law",
+      title: "The Famous Divorce",
+      views: "103K",
+      language: "English"
+    },
+    {
+      id: 4,
+      lawyerName: "Parth Puranik",
+      law: "Litigation",
+      title: "Dowry",
+      views: "69K",
+      language: "English"
+    },
+    {
+      id: 5,
+      lawyerName: "Arvind Kalia",
+      law: "Crime",
+      title: "Forgeries",
+      views: "7k",
+      language: "English"
+    },
+    {
+      id: 4,
+      lawyerName: "Parth Puranik",
+      law: "Litigation",
+      title: "Dowry",
+      views: "69K",
+      language: "English"
+    },
+    {
+      id: 5,
+      lawyerName: "Arvind Kalia",
+      law: "Crime",
+      title: "Forgeries",
+      views: "7k",
+      language: "English"
+    },
   ];
 
   const handleSearchChange = (event) => {
@@ -86,6 +144,11 @@ export default function SFirst() {
     classItem.title.toLowerCase().includes(searchQuery) ||
     classItem.lawyerName.toLowerCase().includes(searchQuery)
   );
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission
+    navigate('/Profile'); // Navigate to SFirst page
+  };
 
 
   return (
@@ -108,11 +171,19 @@ export default function SFirst() {
             {/* More filter options */}
           </select>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <FontAwesomeIcon icon={faUser} style={{ marginRight: '10px' }} />
-          <span>Student Name</span>
-        </div>
-      </div>
+
+        <button 
+          type="button" 
+          className="btn btn-primary nav-btn" 
+          style={{width: '185px'}}
+          onClick={handleSubmit}  // Use onClick to handle the navigation
+          >
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <FontAwesomeIcon icon={faUser} style={{ marginRight: '10px' }} />
+            <span>Student Name</span>
+          </div>
+        </button>
+      </div>  
       
       {/* Ensure the rest of the content is outside and below the navbar */}
       <div className="content">
@@ -126,20 +197,36 @@ export default function SFirst() {
           ))}
         </div>
         <h2>Most engaging Cases of 2023</h2>
-        <div className="class-container">
-          {filteredClasses.map(classItem => (
-            <div className="class-card" key={classItem.id}>
-              <div className="class-card-header">
-                <span>{classItem.views}</span>
+
+        <div className="cards-slider">
+          <button className="slide-arrow left-arrow" onClick={() => scroll('left')}>
+            &lt;
+          </button>
+
+          <div className="cards-container" ref={scrollRef}>
+            {filteredClasses.map(classItem => (
+              <div className="class-card" key={classItem.id}>
+                <div className="class-card-header">                
+                  <span>{classItem.views}</span>
+                  <button type="button" className="bookmark-btn btn">
+                    <FontAwesomeIcon icon={faBookmark} />
+                  </button>
+                </div>
+                <div className="class-card-body">
+                  <span className="law">{classItem.law}</span>
+                  <h3>{classItem.title}</h3>
+                  <p>{classItem.lawyerName}</p>
+                </div>
               </div>
-              <div className="class-card-body">
-                <span className="law">{classItem.law}</span>
-                <h3>{classItem.title}</h3>
-                <p>{classItem.lawyerName}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          <button className="slide-arrow right-arrow" onClick={() => scroll('right')}>
+            &gt;
+          </button>
         </div>
+
+
       </div>
     </div>
   );

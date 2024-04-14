@@ -1,90 +1,93 @@
-const express = require("express")
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const Student = require('../models/Student') 
+const Student = require("../models/Student");
 
-const verifyStudentId = require("../controllers/authCtrl")
+const verifyStudentId = require("../controllers/authCtrl");
 
-const jwt = require('jsonwebtoken')
-const secretKey = process.env.SECRET
-const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken");
+const secretKey = process.env.SECRET;
+const bcrypt = require("bcrypt");
 
 router.post("/signup", async (req, res) => {
+  const { username, email, password, referralCode } = req.body;
 
-    let user = await Student.findOne({ email: req.body.email })
-    if (user) {
-        return res.status(400).send("Registration failed: User already exists!")
-    } else {
-        try {
-            const salt = await bcrypt.genSalt(10)
-            const password = await bcrypt.hash(req.body.password, salt)
-            const newUser = new Student({
-                username: req.body.username,
-                email: req.body.email,
-                password: password,
-                collegeName: req.body.collegeName,
-                gradYear: req.body.gradYear
-            })
-            await newUser.save()
-            return res.status(201).json(newUser)
-        } catch (err) {
-            return res.status(400).json({ message: err.message })
-        }
+  let user = await Student.findOne({ email: req.body.email });
+  if (user) {
+    return res.status(400).send("Registration failed: User already exists!");
+  } else {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const crypt_password = await bcrypt.hash(password, salt);
+      const newUser = new Student({
+        username: username,
+        email: email,
+        password: crypt_password,
+      });
+      await newUser.save();
+      return res.status(201).json(newUser);
+    } catch (err) {
+      return res.status(400).json({ message: err.message });
     }
-})
+  }
+});
 
 router.post("/login", async (req, res) => {
-
     try {
-        let user = Student.findOne({ username: req.body.username })
-        if(!user) {
-            return res.status(400).json({ message: "Incorrect credentials" })
-        }
-
-        const correctPassword = await bcrypt.compare(req.body.password, user.password)
-        if(!correctPassword) {
-            return res.status(400).json({ message: "Incorrect credentials" })
-        }
-
-        const token = jwt.sign({ studentId: user._id, username: user.username }, secretKey)
-        res.cookie(
-            "token", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'development',
-            sameSite: "strict"
-        })
-        res.json({ message: 'Successfully logged in' })
-
+      // Find the user by username
+      const user = await Student.findOne({ username: req.body.username });
+      if (!user) {
+        return res.status(400).json({ message: "Incorrect credentials" });
+      }
+  
+      // Compare passwords
+      const correctPassword = await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
+      if (!correctPassword) {
+        return res.status(400).json({ message: "Incorrect credentials" });
+      }
+  
+      // If passwords match, generate JWT token
+      const token = jwt.sign(
+        { studentId: user._id, username: user.username },
+        secretKey
+      );
+  
+      // Respond with token and user ID
+      res.json({ message: "Successfully logged in", token, userId: user._id });
     } catch (err) {
-        return res.status(400).json({ message: err.message })
+      return res.status(400).json({ message: err.message });
     }
-})
+  });  
 
 router.post("/bookmark", async (req, res) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        // Verifying token
-        const decodedToken = jwt.verify(token, secretKey);
-        const studentId = decodedToken.studentId;
-        const { caseId } = req.body;
+        const token = req.headers.authorization.split(' ')[1]
+
+        //verifying token
+        const decodedToken = jwt.verify(token, secretKey)
+        console.log(decodedToken)
+
+        const studentId = decodedToken.studentId
+
+        // verifyStudentId()
+
+        const { caseId } = req.body
 
         const student = await Student.findById(studentId);
         if (!student) {
-            return res.status(400).send("Account doesn't exist");
-        }
-        const index = student.bookmarked.indexOf(caseId);
-        if (index === -1) {
-            student.bookmarked.push(caseId);
-        } else {
-            student.bookmarked.splice(index, 1);
+            res.status(400).send("Account doesn't exist")
         }
 
-        await student.save();
+        student.bookmarked.push(caseId);
+        await student.save()
 
-        return res.status(200).json({ message: "Case bookmark toggled successfully" });
+        return res.status(200).json({ message: "Case bookmarked successfully" });
 
     } catch (error) {
-        return res.status(400).json({ message: error.message });
+        return res.status(400).json({ message: error.message })
     }
 })
 
@@ -92,4 +95,4 @@ router.post("/bookmark", async (req, res) => {
 
 // })
 
-module.exports = router
+module.exports = router;

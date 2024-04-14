@@ -32,6 +32,9 @@ const StudentSchema  = new Schema({
     bookmarked: [{
         type: Schema.Types.ObjectId,
         ref: 'Case'
+    }],
+    refferalCode:[{
+        type:String
     }]
 })
 
