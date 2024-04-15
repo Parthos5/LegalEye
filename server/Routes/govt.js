@@ -133,18 +133,18 @@ router.post("/uploadCase", async (req, res) => {
 });
 
 router.post("/uploadTranscript", async (req, res) => {
-  const { caseId, file_url } = req.body;
+  const { caseId, transcription_obj } = req.body;
   let theCase = await Case.findById(caseId);
   console.log(theCase);
   var transcriptionArr = [];
 
-  const resp = await axios.post("http://127.0.0.1:8080/transcribe", {
-    file_url,
-  });
-  const audioTranscript = await resp.data;
-  let transcription_obj = {
-    text: audioTranscript.transcript,
-  };
+  // const resp = await axios.post("http://127.0.0.1:8080/transcribe", {
+  //   file_url,
+  // });
+  // const audioTranscript = await resp.data;
+  // let transcription_obj = {
+  //   text: audioTranscript.transcript,
+  // };
 
   transcriptionArr.push(transcription_obj);
   theCase.transcription.push(transcription_obj);

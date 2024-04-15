@@ -9,7 +9,7 @@ const SingleCase = () => {
   const [audioFile, setAudioFile] = useState(null);
   const [audioDate, setAudioDate] = useState("");
   const [isIdMatch, setIsIdMatch] = useState(false);
-
+  const [transcriptionData, setTranscriptionData] = useState([]);
   // Hardcoded case data for display
   const [caseData, setCaseData] = useState({
     plaintiffLawyer: "John Doe",
@@ -25,33 +25,28 @@ const SingleCase = () => {
     // ownerId:""
   });
 
-
   const testUser = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
     console.log(token);
-    const resp = await fetch(
-      "http://localhost:5000/govt/getUser",
-      {
-        method: "POST",
-        headers:{
-          "Content-Type":"application/json" // Corrected typo here
-        },
-        body: JSON.stringify({ token: token }) // Pass token as an object property
-      }
-    );
+    const resp = await fetch("http://localhost:5000/govt/getUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Corrected typo here
+      },
+      body: JSON.stringify({ token: token }), // Pass token as an object property
+    });
     const data = await resp.json();
     console.log(data);
-    // if()
-    if(data.User._id == caseData.ownerId){
+    console.log(data.User._id);
+    console.log(caseData.ownerId);
+    if (data.User._id == caseData.ownerId) {
       setIsIdMatch(true);
-      console.log(isIdMatch)
+      console.log(isIdMatch);
+    } else {
+      setIsIdMatch(false);
+      console.log(isIdMatch);
     }
-    else{
-      setIsIdMatch(false)
-      console.log(isIdMatch)
-    }
-  }
-  
+  };
 
   const getCase = async () => {
     const resp = await fetch(
@@ -63,14 +58,16 @@ const SingleCase = () => {
     const data = await resp.json();
     console.log(data);
     setCaseData(data);
+    setTranscriptionData(data.transcription);
+    // console.log(data.transcription);
 
-    const viewresp = await fetch("http://localhost:5000/cases/addViews",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+    const viewresp = await fetch("http://localhost:5000/cases/addViews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-      body:JSON.stringify({caseId})
-    })
+      body: JSON.stringify({ caseId }),
+    });
   };
 
   useEffect(() => {
@@ -82,12 +79,12 @@ const SingleCase = () => {
     setEditMode(true);
   };
 
+  // const handleDayClick = (day) => {
+  //   setSelectedDay(day); // Set the selected day when clicked
+  // };
+
   const handleFileChange = (event) => {
     setAudioFile(event.target.files[0]);
-  };
-
-  const handleDateChange = (event) => {
-    setAudioDate(event.target.value);
   };
 
   const handleSubmit = async (event) => {
@@ -105,11 +102,17 @@ const SingleCase = () => {
     setEditMode(false);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "2-digit" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", options);
+  };
+
   return (
     <div className="single-case">
       <div className="single-case-header">
         <h1 className="single-case-title">Case Details</h1>
-        {isIdMatch  && (
+        {isIdMatch && (
           <button onClick={handleEditClick} className="edit-button">
             Edit
           </button>
@@ -117,16 +120,29 @@ const SingleCase = () => {
       </div>
 
       {/* Display case data */}
-      {Object.entries(caseData).map(([key, value]) => (
-        <p className="case-detail" key={key}>
-          <strong>
-            {key
-              .replace(/([A-Z])/g, " $1")
-              .replace(/^./, (str) => str.toUpperCase())}
-            :
-          </strong>{" "}
-          {value}
-        </p>
+      {Object.entries(caseData).map(([key, value]) => {
+        if (key !== "transcription") {
+          return (
+            <p className="case-detail" key={key}>
+              <strong>{key}:</strong> {value}
+            </p>
+          );
+        }
+        return null; // Skip rendering if the key is "transcription"
+      })}
+
+      {transcriptionData.map((entry, index) => (
+        <div key={index} className="transcript-item">
+          <h3>Transcription for {formatDate(entry.createdAt)}</h3>
+          <div className="transcriptionItemDiv">
+            {entry.text.map((textItem, textIndex) => (
+              <p key={textIndex}>
+                <strong>Speaker:</strong> {textItem.speaker} <br />
+                <strong>Text:</strong> {textItem.text}
+              </p>
+            ))}
+          </div>
+        </div>
       ))}
 
       {editMode && (

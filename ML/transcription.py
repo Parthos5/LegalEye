@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify
 import assemblyai as aai
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # AssemblyAI API key
 aai.settings.api_key = "f43bf3801db444859001ba968f5133c6"
