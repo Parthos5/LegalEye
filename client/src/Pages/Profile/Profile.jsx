@@ -22,8 +22,6 @@ export default function Profile() {
       body: JSON.stringify({ token: token })
     })
     const data = await resp.json();
-    // setStudent(data)
-    setStudent(data.User)
     console.log(student)
   }
 
