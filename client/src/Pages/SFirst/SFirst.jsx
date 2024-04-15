@@ -172,6 +172,25 @@ export default function SFirst() {
     },
   ];
 
+  const handleBookmark = async (id) => {
+    console.log("caseId", id)
+    const token = JSON.parse(localStorage.getItem("token"));
+    console.log(token)
+    const resp = await fetch("http://localhost:5000/student/bookmark", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify({
+        id: id
+      })
+    })
+    const data = await resp.json()
+    console.log(data)
+    navigate('/SFirst')
+  }
+
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
   };
@@ -281,7 +300,7 @@ export default function SFirst() {
               >
                 <div className="class-card-header">
                   <span>{classItem.totalViews}</span>
-                  <button type="button" className="bookmark-btn btn">
+                  <button type="button" className="bookmark-btn btn" onClick={() => handleBookmark(classItem._id)}>
                     <FontAwesomeIcon icon={faBookmark} />
                   </button>
                 </div>
