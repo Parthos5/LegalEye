@@ -138,10 +138,10 @@ router.post("/uploadDrive", upload.single("audio"), async (req, res) => {
   }
 });
 
-router.post("/addViews",async (req,res) => {
+router.post("/addViews", async (req, res) => {
   try {
-    const {caseId} = req.body;
-    const caseObj = await Case.findById(caseId)
+    const { caseId } = req.body;
+    const caseObj = await Case.findById(caseId);
     if (!caseObj) {
       return res.status(404).json({ message: "Case not found." });
     }
@@ -151,7 +151,7 @@ router.post("/addViews",async (req,res) => {
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
-})
+});
 
 router.get("/isSummary/:id", async (req, res) => {
   try {
@@ -160,12 +160,53 @@ router.get("/isSummary/:id", async (req, res) => {
     if (!caseReqd) {
       return res.status(404).json({ message: "Case not found." });
     }
-    if(caseReqd.summary){
-      res.status(200).json({summary:true});
+    if (caseReqd.summary) {
+      return res.status(200).json({ summary: true });
     }
-    res.status(200).json({summary:false})
+    else{
+      res.status(200).json({ summary: false });
+    }
   } catch (error) {
     res.status(500).send({ message: error.message });
+  }
+});
+
+router.post("/uploadSummary/:id", async (req, res) => {
+  try {
+    const {summary} = req.body;
+    const { id } = req.params;
+    const caseReqd = await Case.findById(id);
+    if (!caseReqd) {
+      return res.status(404).json({ message: "Case not found." });
+    }
+    if(caseReqd.transcription){
+      caseReqd.summary = summary;
+
+    }
+    // Save the case
+    await caseReqd.save();
+
+    res.status(200).json({ message: "Summary added successfully.", caseReqd });
+  } catch (err) {
+    return res.status(500).json({ Error: err });
+  }
+});
+
+router.get("/getSummary/:id", async (req, res) => {
+  try {
+    // const {summary} = req.body;
+    const { id } = req.params;
+    const caseReqd = await Case.findById(id);
+    if (!caseReqd) {
+      res.status(404).json({ message: "Case not found." });
+    }
+    if(caseReqd.summary){
+      const summary = caseReqd.summary
+    }
+
+    return res.status(200).json({ summary });
+  } catch (err) {
+    res.status(500).json({ Error: err });
   }
 });
 

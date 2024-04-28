@@ -3,9 +3,12 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: #654321; /* Dark Brown */
-    margin: 2rem auto;
-    padding: 2rem;
-    max-width: 800px
+    /* margin: 2rem auto;
+    padding: 2rem; */
+    /* max-width: 800px */
+    width: 100vw;
+    display: flex;
+
   }
   
   .single-case .single-case-header {
@@ -95,10 +98,15 @@
   padding: 20px;
   overflow-y: auto; /* allows scrolling */
   height: 100vh; /* full height of the view */
+  width: 70vw;
+  padding-top: 10vh;
+  margin-left: 6vw;
+
 }
 
 /* Right side styles */
 .right-side {
+  padding-top: 9vh !important;
   flex-grow: 1; /* smaller than left side */
   background-color: #f5f5dc; /* slightly different color for visual separation */
   padding: 20px;

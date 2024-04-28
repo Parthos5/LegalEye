@@ -148,6 +148,7 @@ router.post("/uploadTranscript", async (req, res) => {
 
   transcriptionArr.push(transcription_obj);
   theCase.transcription.push(transcription_obj);
+  delete theCase.summary;
 
   await theCase.save();
 
