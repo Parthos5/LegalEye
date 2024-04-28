@@ -22,6 +22,9 @@ var CaseSchema = new Schema({
     title:{
         type:String
     },
+    summary:{
+        type:String
+    },
     plaintiffName: {
         type: String
     },

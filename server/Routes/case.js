@@ -153,4 +153,20 @@ router.post("/addViews",async (req,res) => {
   }
 })
 
+router.get("/isSummary/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const caseReqd = await Case.findById(id);
+    if (!caseReqd) {
+      return res.status(404).json({ message: "Case not found." });
+    }
+    if(caseReqd.summary){
+      res.status(200).json({summary:true});
+    }
+    res.status(200).json({summary:false})
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+});
+
 module.exports = router;
