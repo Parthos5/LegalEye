@@ -14,6 +14,7 @@ import criminallaw from "../../assets/Criminallaw.webp";
 import intlaw from "../../assets/intlaw.webp";
 import publiclaw from "../../assets/publiclaw.webp";
 import { Link, useNavigate } from "react-router-dom";
+import { FaRegBookmark } from "react-icons/fa6";
 
 export default function SFirst() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,7 +32,7 @@ export default function SFirst() {
       body: JSON.stringify({ token }),
     });
     const data = await resp.json();
-    console.log(data.userType);
+    // console.log(data.userType);
     if (data.userType == "govt") {
       setIsGovt(true);
       localStorage.setItem("userRole","govt")
@@ -188,7 +189,8 @@ export default function SFirst() {
     })
     const data = await resp.json()
     console.log(data)
-    navigate('/SFirst')
+    // navigate('/SFirst')
+    getViewCases()
   }
 
   const handleSearchChange = (event) => {
@@ -301,8 +303,12 @@ export default function SFirst() {
               >
                 <div className="class-card-header">
                   <span>{classItem.totalViews}</span>
-                  <button type="button" className="bookmark-btn btn" onClick={() => handleBookmark(classItem._id)}>
-                    <FontAwesomeIcon icon={faBookmark} />
+                  <button type="button" className={`bookmark-btn btn ${classItem.bookmarked ? 'bookmark-btn-bookmarked' : ''}`} onClick={
+                    (e) => {
+                      e.stopPropagation()
+                      handleBookmark(classItem._id)
+                    }}>
+                    <FaRegBookmark />
                   </button>
                 </div>
                 <div className="class-card-body">

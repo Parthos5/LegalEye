@@ -61,13 +61,17 @@
 
   .bookmark-btn {
     width: 40px;
-    background-color: #271c14;
+    background-color: #fff;
     height: 40px;
     border-radius: 4px;
-    color: #fff;
+    color: #271c14;
     cursor: pointer;
     transition: 0.5s;
     padding: 0px 0px;
+  }
+
+  .bookmark-btn-bookmarked {
+    color: #FF0000;
   }
 
   .button{

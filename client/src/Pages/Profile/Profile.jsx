@@ -9,10 +9,11 @@ export default function Profile() {
   //   username:"John_Doe"
   // };
 
-  const [student, setStudent] = useState({});
+  const [student, setStudent] = useState([]);
   const [bookmarkCases, setBookmarkCases] = useState([]);
 
   const getUser = async () => {
+    console.log("I am running")
     const token = JSON.parse(localStorage.getItem("token"));
     const resp = await fetch("http://localhost:5000/govt/getUser", {
       method: "POST",
@@ -22,28 +23,33 @@ export default function Profile() {
       body: JSON.stringify({ token: token })
     })
     const data = await resp.json();
-    console.log(student)
+    setStudent(data.User)
   }
 
   const fetchBookmarkedCases = async () => {
     const bookmarkedCasesArray = [];
-    for (const idCase of student.bookmarked) {
-      const resp = await fetch(`http://localhost:5000/cases/getCaseById/${idCase}`, {
-        method: "GET"
-      });
-      const ObjCase = await resp.json();
-      bookmarkedCasesArray.push(ObjCase);
+    console.log(student)
+    console.log(student.bookmarked)
+
+    if(student.bookmarked.length == null) {
+      setBookmarkCases([])
+    } 
+    else {
+      for (var i = 0; i < student.bookmarked.length; i++) {
+        const idCase = student.bookmarked[i]
+        const resp = await fetch(`http://localhost:5000/cases/getCaseById/${idCase}`)
+        const objCase = await resp.json()
+        console.log(objCase)
+        bookmarkedCasesArray.push(objCase)
+      }
+      setBookmarkCases(bookmarkedCasesArray)
     }
-    console.log(fetchBookmarkedCases)
-    setBookmarkCases(bookmarkedCasesArray);
   };
 
   useEffect(() => {
     getUser();
-    if (student.bookmarked && student.bookmarked.length > 0) {
-      fetchBookmarkedCases();
-    }
-  }, []);
+    fetchBookmarkedCases();
+  }, [student]);
 
 
   // const bookmarkedCases = [
@@ -92,7 +98,7 @@ export default function Profile() {
     <div className="profile-container">
       <h2>Profile</h2>
       <div>
-        <h3>Student Information</h3>
+        <h3>Student Information{student.bookmarked}</h3>
         <p><strong>Name:</strong> {student.username}</p>
         {/* <p><strong>College Name:</strong> {student.User.collegeName}</p> */}
         <p><strong>Username:</strong> {student.username}</p>

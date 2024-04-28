@@ -68,7 +68,37 @@ const SingleCase = () => {
       },
       body: JSON.stringify({ caseId }),
     });
+
+    summarizeCase()
   };
+
+  const summarizeCase = async () => {
+    const allTranscript = []
+    if(transcriptionData != null) {
+      for(var i = 0; i < transcriptionData.length; i++) {
+        var textArr = transcriptionData[i].text;
+        for(var j = 0; j < textArr.length; j++) {
+          var obj = textArr[j]
+          allTranscript.push(obj)
+        }
+      }
+    }
+
+    console.log(allTranscript)
+
+    const resp = await fetch("http://localhost:5000/govt/summarize", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        transcript: allTranscript
+      })
+    })
+
+    const data = await resp.json();
+    console.log(data);
+  }
 
   useEffect(() => {
     getCase();
