@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./SingleCase.css"; // Make sure the CSS file is imported
 import { useParams } from "react-router-dom";
+import "./SingleCase.css"; // Make sure the CSS file is imported
 
 const SingleCase = () => {
   const { caseId } = useParams();
@@ -10,7 +10,6 @@ const SingleCase = () => {
   const [audioDate, setAudioDate] = useState("");
   const [isIdMatch, setIsIdMatch] = useState(false);
   const [transcriptionData, setTranscriptionData] = useState([]);
-  // Hardcoded case data for display
   const [caseData, setCaseData] = useState({
     plaintiffLawyer: "John Doe",
     defendantLawyer: "Jane Smith",
@@ -22,7 +21,6 @@ const SingleCase = () => {
     caseDescription: "Case of breach of contract",
     hearingDate: "15/04/2024",
     caseNumber: "12345ABC",
-    // ownerId:""
   });
 
   const testUser = async () => {
@@ -68,20 +66,71 @@ const SingleCase = () => {
       },
       body: JSON.stringify({ caseId }),
     });
+
+    // summarizeCase()
+  }
+
+  const handleDateChange = (event) => {
+    setAudioDate(event.target.value);
   };
+
+  const summarizeCase = async () => {
+    const allTranscript = []
+    if (transcriptionData != null) {
+      for (var i = 0; i < transcriptionData.length; i++) {
+        var textArr = transcriptionData[i].text;
+        for (var j = 0; j < textArr.length; j++) {
+          var obj = textArr[j]
+          allTranscript.push(obj)
+        }
+      }
+    }
+
+    console.log(allTranscript)
+
+    const resp = await fetch("http://localhost:5000/govt/summarize", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        transcript: allTranscript
+      })
+    })
+
+    const data = await resp.json();
+    console.log(data);
+  }
 
   useEffect(() => {
-    getCase();
-    testUser();
-  }, []);
+    const fetchData = async () => {
+      const resp = await fetch(`http://localhost:5000/cases/getCaseById/${caseId}`);
+      const caseDetails = await resp.json();
+      setCaseData(caseDetails);
+      setTranscriptionData(caseDetails.transcription || []);
 
-  const handleEditClick = () => {
-    setEditMode(true);
-  };
+      const viewResponse = await fetch("http://localhost:5000/cases/addViews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ caseId }),
+      });
 
-  // const handleDayClick = (day) => {
-  //   setSelectedDay(day); // Set the selected day when clicked
-  // };
+      // Assuming this fetch checks user's access rights
+      const userResp = await fetch("http://localhost:5000/govt/getUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: JSON.parse(localStorage.getItem("token")) }),
+      });
+      const userData = await userResp.json();
+      setIsIdMatch(userData.User._id === caseData.ownerId);
+    };
+
+    fetchData();
+  }, [caseId]);
 
   const handleFileChange = (event) => {
     setAudioFile(event.target.files[0]);
@@ -95,8 +144,7 @@ const SingleCase = () => {
       url: URL.createObjectURL(audioFile),
       summary: "Generated summary of the audio will appear here.", // Placeholder summary
     };
-    setAudios(audios.concat(newAudioData)); // Add new audio data to the array
-    // Clear the input fields
+    setAudios([...audios, newAudioData]);
     setAudioFile(null);
     setAudioDate("");
     setEditMode(false);
@@ -110,44 +158,39 @@ const SingleCase = () => {
 
   return (
     <div className="single-case">
-      <div className="single-case-header">
-        <h1 className="single-case-title">Case Details</h1>
-        {isIdMatch && (
-          <button onClick={handleEditClick} className="edit-button">
-            Edit
-          </button>
-        )}
-      </div>
-
-      {/* Display case data */}
-      {Object.entries(caseData).map(([key, value]) => {
-        if (key !== "transcription") {
-          return (
-            <p className="case-detail" key={key}>
-              <strong>{key}:</strong> {value}
-            </p>
-          );
-        }
-        return null; // Skip rendering if the key is "transcription"
-      })}
-
-      {transcriptionData.map((entry, index) => (
-        <div key={index} className="transcript-item">
-          <h3>Transcription for {formatDate(entry.createdAt)}</h3>
-          <div className="transcriptionItemDiv">
-            {entry.text.map((textItem, textIndex) => (
-              <p key={textIndex}>
-                <strong>Speaker:</strong> {textItem.speaker} <br />
-                <strong>Text:</strong> {textItem.text}
-              </p>
-            ))}
-          </div>
+      <div className="left-side">
+        {/* Left side content: case details and transcriptions */}
+        <div className="case-details">
+          <h1 className="case-details-title">Case Details</h1>
+          {Object.entries(caseData).map(([key, value]) => {
+            if (key !== "transcription" && key !== "ownerId" && key !== "_id" && key !== "__v") {
+              return (
+                <p className="case-detail" key={key}>
+                  <strong>{`${key.replace(/([A-Z])/g, ' $1').trim()}:`}</strong> {value}
+                </p>
+              );
+            }
+            return null; // Skip rendering for certain keys
+          })}
         </div>
-      ))}
 
-      {editMode && (
-        <div className="form-container">
-          <form onSubmit={handleSubmit}>
+        {transcriptionData.map((entry, index) => (
+          <div key={index} className="transcript-item" id={`transcription-${index}`}>
+            <h2>Transcription for {formatDate(entry.createdAt)}</h2>
+            <div>
+              {entry.text.map((textItem, textIndex) => (
+                <p key={textIndex}>
+                  <strong>Speaker:</strong> {textItem.speaker}<br />
+                  <strong>Text:</strong> {textItem.text}
+                </p>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {/* Edit mode for uploading new transcriptions */}
+        {editMode && (
+          <form onSubmit={handleSubmit} className="form-container">
             <label htmlFor="audioUpload">Upload Audio File:</label>
             <input
               type="file"
@@ -160,31 +203,29 @@ const SingleCase = () => {
               type="date"
               id="audioDate"
               value={audioDate}
-              onChange={handleDateChange}
+              onChange={(e) => setAudioDate(e.target.value)}
             />
             <button type="submit" className="submit-button">
               Submit
             </button>
           </form>
-        </div>
-      )}
-
-      {/* Display submitted audio files and dates */}
-      {audios.map((audio, index) => (
-        <div key={index} className="audio-control">
-          <p className="audio-file-info">
-            <strong>Audio File:</strong> {audio.file.name}
-            <strong>Date:</strong> {audio.date}
-          </p>
-          <audio controls>
-            <source src={audio.url} type={audio.file.type} />
-            Your browser does not support the audio element.
-          </audio>
-          <p className="summary">{audio.summary}</p>
-        </div>
-      ))}
+        )}
+      </div>
+      <div className="right-side">
+        {/* Right side content: clickable transcription headings */}
+        {transcriptionData.map((entry, index) => (
+          <a
+            key={index}
+            className="transcription-link"
+            onClick={() => document.getElementById(`transcription-${index}`).scrollIntoView({ behavior: 'smooth' })}
+          >
+            Transcription for {formatDate(entry.createdAt)}
+          </a>
+        ))}
+      </div>
     </div>
   );
+
 };
 
 export default SingleCase;

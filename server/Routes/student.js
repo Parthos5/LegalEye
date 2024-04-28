@@ -33,62 +33,83 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    try {
-      // Find the user by username
-      const user = await Student.findOne({ username: req.body.username });
-      if (!user) {
-        return res.status(400).json({ message: "Incorrect credentials" });
-      }
-  
-      // Compare passwords
-      const correctPassword = await bcrypt.compare(
-        req.body.password,
-        user.password
-      );
-      if (!correctPassword) {
-        return res.status(400).json({ message: "Incorrect credentials" });
-      }
-  
-      // If passwords match, generate JWT token
-      const token = jwt.sign(
-        { studentId: user._id, username: user.username },
-        secretKey
-      );
-  
-      // Respond with token and user ID
-      res.json({ message: "Successfully logged in", token, userId: user.userId });
-    } catch (err) {
-      return res.status(400).json({ message: err.message });
+  try {
+    // Find the user by username
+    const user = await Student.findOne({ username: req.body.username });
+    if (!user) {
+      return res.status(400).json({ message: "Incorrect credentials" });
     }
-  });  
+
+    // Compare passwords
+    const correctPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    if (!correctPassword) {
+      return res.status(400).json({ message: "Incorrect credentials" });
+    }
+
+    // If passwords match, generate JWT token
+    const token = jwt.sign(
+      { studentId: user._id, username: user.username },
+      secretKey
+    );
+
+    // Respond with token and user ID
+    res.json({ message: "Successfully logged in", token, userId: user.userId });
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+});
 
 router.post("/bookmark", async (req, res) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-
-    //verifying token
+    const token = req.headers.authorization
+    // Verifying token
     const decodedToken = jwt.verify(token, secretKey);
-    console.log(decodedToken);
 
     const studentId = decodedToken.studentId;
+    // Verify studentId (You can implement this function if needed)
 
-    // verifyStudentId()
-
-    const { caseId } = req.body;
-
+    const { id } = req.body;
     const student = await Student.findById(studentId);
     if (!student) {
-      res.status(400).send("Account doesn't exist");
+      return res.status(400).send("Account doesn't exist");
     }
 
-    student.bookmarked.push(caseId);
+    const index = student.bookmarked.indexOf(id);
+    console.log(index)
+    if (index === -1) {
+      student.bookmarked.push(id);
+    } else {
+      student.bookmarked.splice(index, 1);
+    }
+
     await student.save();
 
-    return res.status(200).json({ message: "Case bookmarked successfully" });
+    return res.status(200).json({ message: "Case bookmark toggled successfully" });
+
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
-});
+})
+
+router.get("/getStudent/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const StudObj = await Student.findById(userId)
+    if(!StudObj) {
+      return res.status(400).json({ message: "User doesn't exist" })
+    }
+    return res.status(200).json(StudObj)
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+})
+
+router.get('/getAllBookmarkedCases', async (req, res) => {
+  
+})
 
 // router.delete("/bookmark/:caseId", async (req, res) => {
 

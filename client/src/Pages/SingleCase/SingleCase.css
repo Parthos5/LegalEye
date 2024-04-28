@@ -89,9 +89,171 @@
     margin-top: 1rem;
   }
 
-  .transcriptionItemDiv{
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
-  }
+/* Left side styles */
+.left-side {
+  flex-grow: 2; /* takes up more space */
+  padding: 20px;
+  overflow-y: auto; /* allows scrolling */
+  height: 100vh; /* full height of the view */
+}
+
+/* Right side styles */
+.right-side {
+  flex-grow: 1; /* smaller than left side */
+  background-color: #f5f5dc; /* slightly different color for visual separation */
+  padding: 20px;
+  height: 100vh; /* full height of the view */
+  overflow-y: auto; /* allows scrolling */
+  border-left: 2px solid #d2b48c; /* adds a border for visual separation */
+}
+
+.single-case-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.single-case-title {
+  color: #4A300F; /* dark brown color for the title */
+  font-size: 24px;
+}
+
+.edit-button {
+  padding: 10px 20px;
+  background-color: #b8860b; /* gold color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-button:hover {
+  background-color: #DAA520; /* lighter gold color on hover */
+}
+
+.case-detail {
+  margin: 10px 0;
+  color: #333; /* dark grey for text */
+}
+
+.transcription-link:hover {
+  background-color: #DAA520; /* lighter gold color on hover */
+}
+
+.case-detail-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.case-detail-content {
+  margin-bottom: 10px;
+}
+
+.transcript-item {
+  background-color: #f4f4f4; /* light grey background for each transcription block */
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
+.case-detail h2,
+.case-detail p {
+  margin: 10px 0;
+}
+
+/* Style the transcription section headers to stand out */
+.transcript-item h3 {
+  background-color: #b8860b; /* gold color */
+  padding: 10px;
+  border-radius: 4px;
+  color: #4A300F; /* matching the dark brown color theme */
+  margin-bottom: 10px;
+}
+
+.form-container {
+  background-color: #EEDD82; /* light golden background for the form area */
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  color: #4A300F;
+}
+
+input[type="file"],
+input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 20px;
+  background-color: #4A300F; /* dark brown color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #8B4513; /* darker shade of brown */
+}
+
+.audio-control {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f4f4f4; /* light grey for audio control background */
+  border-radius: 5px;
+}
+
+.audio-file-info {
+  margin-bottom: 10px;
+}
+
+.summary {
+  margin-top: 10px;
+  font-style: italic;
+  color: #666; /* grey for summary */
+}
+
+audio {
+  width: 100%; /* ensures audio controls fit the container */
+}
+
+.transcription-link {
   
+  display: block;
+  text-align: center;
+  padding: 20px;
+  padding-bottom: 20px !important;
+  height: 100px;
+  width: fit-content;
+  margin: 10px 0;
+  background-color: #b8860b; /* gold color for the links */
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none; /* removes underline from links */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.left-side::-webkit-scrollbar,
+.right-side::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge, and Firefox */
+.left-side,
+.right-side {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

@@ -14,11 +14,15 @@ import criminallaw from "../../assets/Criminallaw.webp";
 import intlaw from "../../assets/intlaw.webp";
 import publiclaw from "../../assets/publiclaw.webp";
 import { Link, useNavigate } from "react-router-dom";
+import { FaRegBookmark } from "react-icons/fa6";
+import { FaBookmark } from "react-icons/fa6";
 
 export default function SFirst() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isGovt, setIsGovt] = useState(false);
   const [topviewCases, setTopviewCases] = useState([]);
+  const [username, setUsername] = useState("");
+  const [bkmarkedCases, setBkmarkedCases] = useState([]);
   const navigate = useNavigate();
 
   const getUserType = async () => {
@@ -31,13 +35,15 @@ export default function SFirst() {
       body: JSON.stringify({ token }),
     });
     const data = await resp.json();
-    console.log(data.userType);
+    // console.log(data.userType);
+    setUsername(data.User.username)
     if (data.userType == "govt") {
       setIsGovt(true);
-      localStorage.setItem("userRole","govt")
+      localStorage.setItem("userRole", "govt")
     }
-    else{
-      localStorage.setItem("userRole","student")
+    else {
+      localStorage.setItem("userRole", "student")
+      setBkmarkedCases(data.User.bookmarked)
     }
   };
 
@@ -172,6 +178,32 @@ export default function SFirst() {
     },
   ];
 
+  const handleBookmark = async (id) => {
+    if (isBookmarked(id)) {
+
+    } else {
+
+    }
+    console.log("caseId", id)
+    const token = JSON.parse(localStorage.getItem("token"));
+    console.log(token)
+    const resp = await fetch("http://localhost:5000/student/bookmark", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify({
+        id: id
+      })
+    })
+    const data = await resp.json()
+    console.log(data)
+    // navigate('/SFirst')
+    getViewCases()
+    getUserType()
+  }
+
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value.toLowerCase());
   };
@@ -199,6 +231,12 @@ export default function SFirst() {
     const path = event.target.value;
     navigate(path); // Programmatically navigate to the new path
   };
+  const isBookmarked = (caseId) => {
+    if (bkmarkedCases.includes(caseId)) {
+      return true
+    }
+    return false
+  }
 
   return (
     <div>
@@ -247,22 +285,14 @@ export default function SFirst() {
         >
           <div style={{ display: "flex", alignItems: "center" }}>
             <FontAwesomeIcon icon={faUser} style={{ marginRight: "10px" }} />
-            <span>Student Name</span>
+            <span>{username}</span>
           </div>
         </button>
       </div>
 
       {/* Ensure the rest of the content is outside and below the navbar */}
       <div className="content">
-        <div className="case-container">
-          {filteredCases.map((caseItem) => (
-            <div className="case-card" key={caseItem.id}>
-              <img src={caseItem.imageUrl} alt={caseItem.title} />
-              <h3>{caseItem.title}</h3>
-              <p>{caseItem.description}</p>
-            </div>
-          ))}
-        </div>
+
         <h2>Most engaging Cases of 2023</h2>
 
         <div className="cards-slider">
@@ -282,8 +312,20 @@ export default function SFirst() {
               >
                 <div className="class-card-header">
                   <span>{classItem.totalViews}</span>
-                  <button type="button" className="bookmark-btn btn">
-                    <FontAwesomeIcon icon={faBookmark} />
+                  {/* {
+            isBookmarked(classItem._id) && 
+          } */}
+                  <button type="button" className={`bookmark-btn btn`} onClick={
+                    (e) => {
+                      e.stopPropagation()
+                      handleBookmark(classItem._id)
+                    }}>
+                    {
+                      isBookmarked(classItem._id) && <FaBookmark />
+                    }
+                    {
+                      !isBookmarked(classItem._id) && <FaRegBookmark />
+                    }
                   </button>
                 </div>
                 <div className="class-card-body">
@@ -302,6 +344,17 @@ export default function SFirst() {
             &gt;
           </button>
         </div>
+
+        <div className="case-container">
+          {filteredCases.map((caseItem) => (
+            <div className="case-card" key={caseItem.id}>
+              <img src={caseItem.imageUrl} alt={caseItem.title} />
+              <h3>{caseItem.title}</h3>
+              <p>{caseItem.description}</p>
+            </div>
+          ))}
+        </div>
+
       </div>
     </div>
   );

@@ -42,6 +42,20 @@
     color: #d4af37; /* Golden */
     margin: 0; /* Remove margin to avoid extra spacing */
   }
+
+  .profile-container .empty-message {
+    background-color: #f5f5dc;
+    margin: 0 2rem;
+    padding: 3%;
+    text-align: center;
+    border-radius: 0.3rem;
+  }
+  
+  .profile-container .empty-message p {
+    color: #a43535;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
   
   .profile-container > div {
     margin-bottom: 20px;
