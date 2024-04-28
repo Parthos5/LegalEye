@@ -36,6 +36,7 @@ def summarize_model():
     try:
         print("hello")
         article = """
+        seak
         Plaintiff Lawyer: Your client clearly breached the contract by failing to deliver the agreed-upon goods by the specified deadline.
         Defendant Lawyer: Our client encountered unforeseen circumstances that made it impossible to meet the deadline stipulated in the contract.
         Plaintiff Lawyer: Regardless of the circumstances, the contract explicitly states the timeline for delivery, which your client failed to adhere to.
@@ -46,7 +47,7 @@ def summarize_model():
         Defendant Lawyer: We sympathize with the losses incurred by your client, but we maintain that the force majeure clause in the contract exempts our client from liability in this situation.
         """
         summarizer = pipeline('summarization')
-        return jsonfiy({"summarisation":summarizer(article,max_length=100,min_length=30,do_sample=False)})
+        return jsonify({"summarisation":summarizer(article,max_length=100,min_length=30,do_sample=False)})
     except Exception as e:
         print(e)
         return jsonify({"error": "Internal server error"}), 500
