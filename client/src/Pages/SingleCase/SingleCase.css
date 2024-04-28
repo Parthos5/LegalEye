@@ -147,8 +147,13 @@ audio {
 }
 
 .transcription-link {
+  
   display: block;
-  padding: 10px;
+  text-align: center;
+  padding: 20px;
+  padding-bottom: 20px !important;
+  height: 100px;
+  width: fit-content;
   margin: 10px 0;
   background-color: #b8860b; /* gold color for the links */
   color: #ffffff;

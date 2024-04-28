@@ -98,7 +98,7 @@ export default function Profile() {
     <div className="profile-container">
       <h2>Profile</h2>
       <div>
-        <h3>Student Information{student.bookmarked}</h3>
+        <h3>Student Information</h3>
         <p><strong>Name:</strong> {student.username}</p>
         {/* <p><strong>College Name:</strong> {student.User.collegeName}</p> */}
         <p><strong>Username:</strong> {student.username}</p>

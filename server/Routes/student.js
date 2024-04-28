@@ -107,6 +107,10 @@ router.get("/getStudent/:userId", async (req, res) => {
   }
 })
 
+router.get('/getAllBookmarkedCases', async (req, res) => {
+  
+})
+
 // router.delete("/bookmark/:caseId", async (req, res) => {
 
 // })

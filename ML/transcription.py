@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import assemblyai as aai
 from flask_cors import CORS
-from transformers import pipeline
+# from transformers import pipeline
 
 app = Flask(__name__)
 CORS(app)
@@ -31,31 +31,31 @@ def transcribe_audio():
         print(e)
         return jsonify({"error": "Internal server error"}), 500
 
-@app.route("/summarize",methods=["POST"])
-def summarize_model():
-    try:
-        print("hello")
-        # article = """
-        # seak
-        # Plaintiff Lawyer: Your client clearly breached the contract by failing to deliver the agreed-upon goods by the specified deadline.
-        # Defendant Lawyer: Our client encountered unforeseen circumstances that made it impossible to meet the deadline stipulated in the contract.
-        # Plaintiff Lawyer: Regardless of the circumstances, the contract explicitly states the timeline for delivery, which your client failed to adhere to.
-        # Defendant Lawyer: We understand the importance of timelines, but we believe the circumstances constitute force majeure, relieving our client of liability in this instance.
-        # Plaintiff Lawyer: Your client had a duty to communicate any issues that arose and seek alternative solutions to fulfill their obligations under the contract.
-        # Defendant Lawyer: Our client did communicate the challenges they faced and made efforts to mitigate the impact on the delivery schedule, but the circumstances were beyond their control.
-        # Plaintiff Lawyer: Nevertheless, the failure to deliver as agreed has caused significant financial losses to our client, and we expect appropriate compensation to remedy the breach of contract.
-        # Defendant Lawyer: We sympathize with the losses incurred by your client, but we maintain that the force majeure clause in the contract exempts our client from liability in this situation.
-        # """
+# @app.route("/summarize",methods=["POST"])
+# def summarize_model():
+#     try:
+#         print("hello")
+#         # article = """
+#         # seak
+#         # Plaintiff Lawyer: Your client clearly breached the contract by failing to deliver the agreed-upon goods by the specified deadline.
+#         # Defendant Lawyer: Our client encountered unforeseen circumstances that made it impossible to meet the deadline stipulated in the contract.
+#         # Plaintiff Lawyer: Regardless of the circumstances, the contract explicitly states the timeline for delivery, which your client failed to adhere to.
+#         # Defendant Lawyer: We understand the importance of timelines, but we believe the circumstances constitute force majeure, relieving our client of liability in this instance.
+#         # Plaintiff Lawyer: Your client had a duty to communicate any issues that arose and seek alternative solutions to fulfill their obligations under the contract.
+#         # Defendant Lawyer: Our client did communicate the challenges they faced and made efforts to mitigate the impact on the delivery schedule, but the circumstances were beyond their control.
+#         # Plaintiff Lawyer: Nevertheless, the failure to deliver as agreed has caused significant financial losses to our client, and we expect appropriate compensation to remedy the breach of contract.
+#         # Defendant Lawyer: We sympathize with the losses incurred by your client, but we maintain that the force majeure clause in the contract exempts our client from liability in this situation.
+#         # """
 
-        data = request.json
-        transcripts = data.get("transcripts", [])
+#         data = request.json
+#         transcripts = data.get("transcripts", [])
 
-        summarizer = pipeline('summarization')
-        summary = summarizer(". ".join(transcripts), max_length=100, min_length=30, do_sample=False)
-        return jsonify({"summary": summary})
-    except Exception as e:
-        print(e)
-        return jsonify({"error": "Internal server error"}), 500
+#         summarizer = pipeline('summarization')
+#         summary = summarizer(". ".join(transcripts), max_length=100, min_length=30, do_sample=False)
+#         return jsonify({"summary": summary})
+#     except Exception as e:
+#         print(e)
+#         return jsonify({"error": "Internal server error"}), 500
 
 if __name__ == "__main__":
     app.run(port=8080)
