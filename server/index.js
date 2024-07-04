@@ -7,7 +7,6 @@ const cors = require("cors");
 const port = 5000;
 const mongoDB = require("./db");
 mongoDB();
-// const JWT_SECRET = "MYNAMEISPARTHANDAMAWESOMEHEREIAM"
 
 
 app.use(cors());
