@@ -15,7 +15,7 @@ export default function Govtlogin() {
     console.log(username);
     console.log(password);
 
-    const resp = await fetch("http://localhost:5000/govt/login", {
+    const resp = await fetch("https://legaleye-server.onrender.com/govt/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./SingleCase.css"; // Make sure the CSS file is imported
+import "./SingleCase.css"; 
 
 const SingleCase = () => {
   const { caseId } = useParams();
@@ -27,7 +27,7 @@ const SingleCase = () => {
   const testUser = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
     console.log(token);
-    const resp = await fetch("http://localhost:5000/govt/getUser", {
+    const resp = await fetch("https://legaleye-server.onrender.com/govt/getUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Corrected typo here
@@ -49,7 +49,7 @@ const SingleCase = () => {
 
   const getCase = async () => {
     const resp = await fetch(
-      `http://localhost:5000/cases/getCaseById/${caseId}`,
+      `https://legaleye-server.onrender.com/cases/getCaseById/${caseId}`,
       {
         method: "GET",
       }
@@ -60,7 +60,7 @@ const SingleCase = () => {
     setTranscriptionData(data.transcription);
     // console.log(data.transcription);
 
-    const viewresp = await fetch("http://localhost:5000/cases/addViews", {
+    const viewresp = await fetch("https://legaleye-server.onrender.com/cases/addViews", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const SingleCase = () => {
     return mergedText.trim();
   }
   async function checkSummary(transcription) {
-    const resp = await fetch(`http://localhost:5000/cases/isSummary/${caseId}`);
+    const resp = await fetch(`https://legaleye-server.onrender.com/cases/isSummary/${caseId}`);
     const data = await resp.json();
     console.log(data.summary);
     console.log(transcription);
@@ -106,7 +106,7 @@ const SingleCase = () => {
         const summary = summaryObj.summary[0].summary_text;
         console.log(summary);
         const uploadSummary = await fetch(
-          `http://localhost:5000/cases/uploadSummary/${caseId}`,
+          `https://legaleye-server.onrender.com/cases/uploadSummary/${caseId}`,
           {
             method: "POST",
             headers: {
@@ -121,20 +121,20 @@ const SingleCase = () => {
         fetchData();
       }
     } else {
-      const summaryResp = await fetch(`http://localhost:5000/${caseId}`);
+      const summaryResp = await fetch(`https://legaleye-server.onrender.com/${caseId}`);
       const summaryText = await summaryResp.json();
       setSummary(summaryText.summary);
     }
   }
   const fetchData = async () => {
     const resp = await fetch(
-      `http://localhost:5000/cases/getCaseById/${caseId}`
+      `https://legaleye-server.onrender.com/cases/getCaseById/${caseId}`
     );
     const caseDetails = await resp.json();
     setCaseData(caseDetails);
     setTranscriptionData(caseDetails.transcription);
 
-    const viewResponse = await fetch("http://localhost:5000/cases/addViews", {
+    const viewResponse = await fetch("https://legaleye-server.onrender.com/cases/addViews", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -143,7 +143,7 @@ const SingleCase = () => {
     });
 
     // Assuming this fetch checks user's access rights
-    const userResp = await fetch("http://localhost:5000/govt/getUser", {
+    const userResp = await fetch("https://legaleye-server.onrender.com/govt/getUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

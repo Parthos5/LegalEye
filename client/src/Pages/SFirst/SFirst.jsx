@@ -27,7 +27,7 @@ export default function SFirst() {
 
   const getUserType = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
-    const resp = await fetch("http://localhost:5000/govt/getUser", {
+    const resp = await fetch("https://legaleye-server.onrender.com/govt/getUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export default function SFirst() {
   };
 
   const getViewCases = async () => {
-    const resp = await fetch("http://localhost:5000/cases/getCasesByViews");
+    const resp = await fetch("https://legaleye-server.onrender.com/cases/getCasesByViews");
     const data = await resp.json();
     console.log(data);
     setTopviewCases(data);
@@ -187,7 +187,7 @@ export default function SFirst() {
     console.log("caseId", id)
     const token = JSON.parse(localStorage.getItem("token"));
     console.log(token)
-    const resp = await fetch("http://localhost:5000/student/bookmark", {
+    const resp = await fetch("https://legaleye-server.onrender.com/student/bookmark", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

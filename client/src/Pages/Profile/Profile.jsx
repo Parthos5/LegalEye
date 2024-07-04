@@ -15,7 +15,7 @@ export default function Profile() {
   const getUser = async () => {
     console.log("I am running")
     const token = JSON.parse(localStorage.getItem("token"));
-    const resp = await fetch("http://localhost:5000/govt/getUser", {
+    const resp = await fetch("https://legaleye-server.onrender.com/govt/getUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json" // Corrected typo here
@@ -37,7 +37,7 @@ export default function Profile() {
     else {
       for (var i = 0; i < student.bookmarked.length; i++) {
         const idCase = student.bookmarked[i]
-        const resp = await fetch(`http://localhost:5000/cases/getCaseById/${idCase}`)
+        const resp = await fetch(`https://legaleye-server.onrender.com/cases/getCaseById/${idCase}`)
         const objCase = await resp.json()
         console.log(objCase)
         bookmarkedCasesArray.push(objCase)
@@ -81,7 +81,7 @@ export default function Profile() {
 
   // const bookmarkedCases =  () => {
   //   student.bookmarked.map(async (idCase) => {
-  //     const resp = await fetch(`http://localhost:5000/cases/getCaseById/${idCase}`,{
+  //     const resp = await fetch(`https://legaleye-server.onrender.com/cases/getCaseById/${idCase}`,{
   //       method: "POST"
   //     })
   //     const ObjCase = await resp.json()

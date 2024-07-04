@@ -34,7 +34,7 @@ export default function AddCase() {
     e.preventDefault();
     console.log('Form data submitted:', formState);
     // Integration for data submission to server or state management system goes here
-    const resp = await fetch("http://localhost:5000/govt/uploadCase", {
+    const resp = await fetch("https://legaleye-server.onrender.com/govt/uploadCase", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

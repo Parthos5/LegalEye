@@ -152,7 +152,7 @@ export default function UploadTranscription() {
 
   const publishTranscript = async (id, transcript) => {
     try {
-      const response = await fetch("http://localhost:5000/govt/uploadTranscript", {
+      const response = await fetch("https://legaleye-server.onrender.com/govt/uploadTranscript", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -198,7 +198,7 @@ export default function UploadTranscription() {
     if (audioBlob) {
       const formData = new FormData();
       formData.append("audio", audioBlob, "audio.mp3");
-      const resp = await fetch("http://localhost:5000/cases/uploadDrive", {
+      const resp = await fetch("https://legaleye-server.onrender.com/cases/uploadDrive", {
         method: "POST",
         body: formData,
       });
@@ -230,7 +230,7 @@ export default function UploadTranscription() {
       return;
     }
 
-    fetch("http://localhost:5000/cases/getCasesByUser", {
+    fetch("https://legaleye-server.onrender.com/cases/getCasesByUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

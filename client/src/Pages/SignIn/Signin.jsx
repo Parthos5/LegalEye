@@ -14,7 +14,7 @@ export default function SignIn() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
-    const resp = await fetch("http://localhost:5000/student/signup", {
+    const resp = await fetch("https://legaleye-server.onrender.com/student/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export default function SignIn() {
   };
 
   const handleLogin = async () => {
-    const resp = await fetch("http://localhost:5000/student/login", {
+    const resp = await fetch("https://legaleye-server.onrender.com/student/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

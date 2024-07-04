@@ -31,7 +31,7 @@ export default function UpdateCase() {
   const getCases = async () => {
     try {
       const govtId = JSON.parse(localStorage.getItem("govtId"));
-      const resp = await fetch("http://localhost:5000/cases/getCasesByUser", {
+      const resp = await fetch("https://legaleye-server.onrender.com/cases/getCasesByUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
